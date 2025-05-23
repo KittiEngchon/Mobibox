@@ -1,57 +1,75 @@
 [
   {
     "name": "QuickSwap",
-    "url": "https://quickswap.exchange",
-    "icon": "assets/quickswap.png",
-    "category": "DeFi",
-    "description": "DEX on Polygon.",
-    "rating": 4.5,
-    "certifications": {
+    "description": "DEX ชั้นนำบน Polygon สำหรับสวอปเหรียญอย่างรวดเร็ว",
+    "logo": "assets/quickswap.png",
+    "rating": 4.7,
+    "badge": "L4 Elite",
+    "segmentLevels": {
       "security": 4,
       "team": 3,
       "reputation": 4,
       "ecosystem": 5,
-      "innovation": 4
-    },
-    "badges": ["🌟 Top DeFi", "💰 Polygon Grant"],
-    "favorite": false,
-    "reviews": [
-      {
-        "user": "0x123...abcd",
-        "rating": 5,
-        "comment": "Great swap experience!"
-      },
-      {
-        "user": "0x456...efgh",
-        "rating": 4,
-        "comment": "Reliable but needs UI updates."
-      }
-    ]
+      "innovation": 3
+    }
   },
   {
     "name": "Aavegotchi",
-    "url": "https://aavegotchi.com",
-    "icon": "assets/aavegotchi.png",
-    "category": "GameFi",
-    "description": "NFT staking game.",
+    "description": "เกม NFT ที่ผสานการเงินกับของสะสมดิจิทัล",
+    "logo": "assets/aavegotchi.png",
     "rating": 4.3,
-    "certifications": {
-      "security": 5,
+    "badge": "L3 Verified",
+    "segmentLevels": {
+      "security": 3,
       "team": 4,
       "reputation": 4,
       "ecosystem": 4,
-      "innovation": 5
-    },
-    "badges": ["🎮 GameFi Certified", "🛡️ Audit Passed"],
-    "favorite": true,
-    "reviews": [
-      {
-        "user": "0xa1...1b2",
-        "rating": 5,
-        "comment": "So cute and functional!"
-      }
-    ]
+      "innovation": 4
+    }
+  },
+  {
+    "name": "PolyWallet",
+    "description": "กระเป๋าคริปโตปลอดภัยและรวดเร็ว",
+    "logo": "assets/polywallet.png",
+    "rating": 3.9,
+    "badge": "L2 Audited",
+    "segmentLevels": {
+      "security": 3,
+      "team": 3,
+      "reputation": 3,
+      "ecosystem": 3,
+      "innovation": 2
+    }
+  },
+  {
+    "name": "Mobiminer",
+    "description": "แอปขุดคริปโตแบบเบาๆ สำหรับมือถือ",
+    "logo": "assets/mobiminer.png",
+    "rating": 4.1,
+    "badge": "L2 Audited",
+    "segmentLevels": {
+      "security": 2,
+      "team": 2,
+      "reputation": 4,
+      "ecosystem": 2,
+      "innovation": 4
+    }
+  },
+  {
+    "name": "DeChat",
+    "description": "โซเชียลมีเดีย Web3 ที่เก็บข้อความบน blockchain",
+    "logo": "assets/dechat.png",
+    "rating": 4.5,
+    "badge": "L3 Verified",
+    "segmentLevels": {
+      "security": 4,
+      "team": 4,
+      "reputation": 5,
+      "ecosystem": 3,
+      "innovation": 4
+    }
   }
 ]
+
 
 
