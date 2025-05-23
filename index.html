@@ -6,15 +6,30 @@
   <title>Mobibox App Store</title>
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- ✅ ปลอดภัยกว่า: ไม่ใช้ unsafe-eval -->
+  <!-- Meta for SEO -->
+  <meta name="description" content="Mobibox Web3 App Store บน Polygon รวมแอป DeFi, Wallet, GameFi และอื่นๆ พร้อมรีวิวและอันดับความน่าเชื่อถือ">
+  <meta name="keywords" content="Mobibox, Web3, Polygon, App Store, DApp, DeFi, NFT, Wallet">
+
+  <!-- Social Sharing (Open Graph + Twitter) -->
+  <meta property="og:title" content="Mobibox Web3 App Store" />
+  <meta property="og:description" content="ศูนย์รวม Web3 Apps บน Polygon พร้อมรีวิว ความน่าเชื่อถือ และการรับรอง" />
+  <meta property="og:image" content="assets/cover.png" />
+  <meta property="og:url" content="https://kittiengchon.github.io/Mobibox/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- CSP -->
   <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
 </head>
 <body>
-  <header>
-    <h1>Mobibox App Store</h1>
+  <header class="header">
+    <h1>🚀 Mobibox App Store</h1>
+    <div class="menu">
+      <button id="themeToggle">🌗 Theme</button>
+    </div>
   </header>
 
-  <section class="controls">
+  <section class="controls container">
+    <input type="text" id="searchInput" placeholder="🔍 ค้นหาแอป..." />
     <label for="filterStars">⭐ Filter by rating:</label>
     <select id="filterStars">
       <option value="0">All</option>
@@ -24,16 +39,16 @@
     </select>
   </section>
 
-  <main>
-    <!-- ✅ ตรวจสอบว่ามี id="appGrid" -->
-    <div id="appGrid" class="app-grid"></div>
+  <main class="container">
+    <div id="appGrid" class="app-grid">
+      <!-- รายการแอปจะโหลดตรงนี้ -->
+    </div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Mobibox</p>
+  <footer class="container">
+    <p>&copy; 2025 Mobibox Ecosystem. All rights reserved.</p>
   </footer>
 
-  <!-- ✅ ใช้ defer เพื่อโหลดหลัง DOM -->
   <script src="scripts.js" defer></script>
 </body>
 </html>
