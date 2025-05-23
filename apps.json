@@ -1,28 +1,32 @@
 [
   {
-    "name": "Mobiswap",
-    "type": "DEX",
-    "url": "https://mobiswap.io",
-    "rating": 4,
-    "badges": {
-      "security": "verified",
-      "team": "trusted",
-      "users": "gold-certified",
-      "ecosystem": "registered",
-      "innovation": "verified"
-    }
-  },
-  {
-    "name": "Mobiminer",
-    "type": "Mining",
-    "url": "https://mobiminer.io",
-    "rating": 5,
-    "badges": {
-      "security": "trusted",
-      "team": "gold-certified",
-      "users": "trusted",
-      "ecosystem": "verified",
-      "innovation": "trusted"
-    }
+    "name": "QuickSwap",
+    "url": "https://quickswap.exchange",
+    "icon": "assets/quickswap.png",
+    "category": "DeFi",
+    "description": "DEX on Polygon.",
+    "rating": 4.5,
+    "certifications": {
+      "security": 4,
+      "team": 3,
+      "reputation": 4,
+      "ecosystem": 5,
+      "innovation": 4
+    },
+    "badges": ["Top DeFi", "Polygon Grant"],
+    "favorited": false,
+    "reviews": [
+      {
+        "user": "0x123...abcd",
+        "rating": 5,
+        "comment": "Great swap experience!"
+      },
+      {
+        "user": "0x456...efgh",
+        "rating": 4,
+        "comment": "Reliable but needs UI updates."
+      }
+    ]
   }
 ]
+
