@@ -1,9 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+  let allApps = [];
+
   fetch("apps.json")
     .then((res) => res.json())
     .then((data) => {
+      allApps = data;
       renderApps(data);
       setupFilters(data);
+      setupSearch();
+      setupThemeToggle();
     })
     .catch((err) => {
       console.error("Failed to load apps.json", err);
@@ -41,9 +46,19 @@ document.addEventListener("DOMContentLoaded", function () {
       rating.className = "rating";
       rating.textContent = `⭐ ${app.rating}`;
 
+      const shareBtn = document.createElement("button");
+      shareBtn.textContent = "🔗";
+      shareBtn.title = "Copy Share Link";
+      shareBtn.onclick = () => {
+        const url = `${window.location.origin}?app=${encodeURIComponent(app.name)}`;
+        navigator.clipboard.writeText(url);
+        alert("Copied share link!");
+      };
+
       const meta = document.createElement("div");
       meta.className = "app-meta";
       meta.appendChild(rating);
+      meta.appendChild(shareBtn);
 
       const info = document.createElement("div");
       info.className = "app-info";
@@ -66,6 +81,29 @@ document.addEventListener("DOMContentLoaded", function () {
       const threshold = parseInt(filter.value);
       const filtered = appList.filter(app => app.rating >= threshold);
       renderApps(filtered);
+    });
+  }
+
+  function setupSearch() {
+    const searchInput = document.getElementById("searchInput");
+    if (!searchInput) return;
+
+    searchInput.addEventListener("input", () => {
+      const keyword = searchInput.value.toLowerCase();
+      const filtered = allApps.filter(app =>
+        app.name.toLowerCase().includes(keyword) ||
+        app.description.toLowerCase().includes(keyword)
+      );
+      renderApps(filtered);
+    });
+  }
+
+  function setupThemeToggle() {
+    const toggleBtn = document.getElementById("themeToggle");
+    if (!toggleBtn) return;
+
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
     });
   }
 
@@ -95,6 +133,3 @@ document.addEventListener("DOMContentLoaded", function () {
     return arr.reduce((sum, val) => sum + val, 0) / arr.length;
   }
 });
-
-
-
