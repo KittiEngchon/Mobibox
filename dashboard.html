@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mobibox Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header class="header">
@@ -21,6 +22,11 @@
       <h2>Badge & Certification Summary</h2>
       <div id="badgeSummary"></div>
     </section>
+
+    <section>
+      <h2>📈 Badge Distribution Chart</h2>
+      <canvas id="badgeChart" width="600" height="300"></canvas>
+    </section>
   </main>
 
   <footer class="container">
@@ -30,4 +36,5 @@
   <script src="dashboard.js"></script>
 </body>
 </html>
+
 
