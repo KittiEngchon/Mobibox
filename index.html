@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mobibox Astro Store</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script defer src="scripts.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mobibox Astro App Store</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
-<body class="bg-gray-900 text-white">
-  <header class="p-4 flex justify-between items-center bg-gray-800 shadow">
-    <h1 class="text-xl font-bold">🌌 Mobibox Astro Store</h1>
-    <div class="flex gap-4 items-center">
-      <select id="viewMode" class="bg-gray-700 text-white p-1 rounded">
-        <option value="iframe">🖼 Iframe</option>
-        <option value="modal">📦 Modal</option>
-        <option value="fullpage">🧭 Full Page</option>
-      </select>
-      <button id="connectWallet" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1 rounded">🔌 Connect Wallet</button>
+<body>
+  <header>
+    <h1>🚀 Mobibox Astro App Store</h1>
+    <div class="toolbar">
+      <label>Filter by rating:
+        <select id="filterStars">
+          <option value="0">All</option>
+          <option value="3">3★+</option>
+          <option value="4">4★+</option>
+          <option value="5">5★</option>
+        </select>
+      </label>
     </div>
   </header>
 
-  <nav class="flex flex-wrap gap-2 p-4 bg-gray-800">
-    <button class="tab-button bg-indigo-500 hover:bg-indigo-600 rounded px-3 py-1" data-category="all">📦 All</button>
-    <button class="tab-button bg-gray-700 hover:bg-gray-600 rounded px-3 py-1" data-category="defi">💸 DeFi</button>
-    <button class="tab-button bg-gray-700 hover:bg-gray-600 rounded px-3 py-1" data-category="wallet">👛 Wallet</button>
-    <button class="tab-button bg-gray-700 hover:bg-gray-600 rounded px-3 py-1" data-category="social">💬 Social</button>
-    <button class="tab-button bg-gray-700 hover:bg-gray-600 rounded px-3 py-1" data-category="nft">🎨 NFT</button>
-    <input id="searchInput" type="text" placeholder="🔍 Search apps..." class="ml-auto px-3 py-1 rounded bg-gray-700 text-white">
-  </nav>
-
-  <main class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="appList">
-    <!-- App Cards Render Here -->
+  <main>
+    <!-- สำคัญ: ที่แสดงแอป -->
+    <div id="appGrid" class="grid-container">
+      <!-- แอปจะถูกแสดงที่นี่ผ่าน scripts.js -->
+    </div>
   </main>
 
-  <div id="modalContainer" class="fixed inset-0 hidden bg-black bg-opacity-70 flex justify-center items-center z-50">
-    <div class="bg-white text-black rounded p-4 w-full max-w-2xl relative">
-      <button id="closeModal" class="absolute top-2 right-2 text-black">✖</button>
-      <iframe id="modalIframe" src="" class="w-full h-[75vh] border-none"></iframe>
-    </div>
-  </div>
+  <footer>
+    <p>&copy; 2025 Mobibox Ecosystem. All rights reserved.</p>
+  </footer>
+
+  <script src="scripts.js"></script>
 </body>
 </html>
+
 
 
