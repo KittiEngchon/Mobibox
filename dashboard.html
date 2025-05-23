@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobibox Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="dashboard.js"></script>
+</head>
+<body class="bg-gray-950 text-white">
+  <header class="p-4 bg-gray-800 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">📊 Dashboard: App Certification Analysis</h1>
+    <a href="index.html" class="text-sm underline">← Back to Store</a>
+  </header>
+
+  <main class="p-6">
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="badgeSummary">
+      <!-- Summary cards by segment will load here -->
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-semibold mb-4">Top Rated & Certified Apps</h2>
+      <div id="topApps" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- App cards with ratings and badges -->
+      </div>
+    </section>
+  </main>
+</body>
+</html>
