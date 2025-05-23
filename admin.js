@@ -1,34 +1,43 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("addAppForm");
-  const status = document.getElementById("adminStatus");
+const exportBtn = document.getElementById("exportBtn");
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const newApp = {
-      name: formData.get("name"),
-      description: formData.get("description"),
-      logo: formData.get("logo"),
-      rating: parseFloat(formData.get("rating")),
-      badge: formData.get("badge"),
-      segmentLevels: {}
-    };
+let addedApps = []; // mock storage (in-memory)
 
-    try {
-      const rawSegment = formData.get("segmentLevels");
-      newApp.segmentLevels = JSON.parse(rawSegment);
-    } catch {
-      status.textContent = "❌ segmentLevels JSON format ไม่ถูกต้อง";
-      status.style.color = "red";
-      return;
-    }
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const newApp = {
+    name: formData.get("name"),
+    description: formData.get("description"),
+    logo: formData.get("logo"),
+    rating: parseFloat(formData.get("rating")),
+    badge: formData.get("badge"),
+    segmentLevels: {}
+  };
 
-    // Mock save: แสดงใน console
-    console.log("📦 แอปใหม่ที่เพิ่ม:", newApp);
-    status.textContent = "✅ เพิ่มแอปเสร็จสมบูรณ์ (mock only)";
-    status.style.color = "green";
+  try {
+    newApp.segmentLevels = JSON.parse(formData.get("segmentLevels"));
+  } catch {
+    status.textContent = "❌ segmentLevels JSON format ไม่ถูกต้อง";
+    status.style.color = "red";
+    return;
+  }
 
-    // Reset form
-    form.reset();
-  });
+  addedApps.push(newApp);
+  status.textContent = "✅ เพิ่มแอปแล้ว (mock only)";
+  status.style.color = "green";
+  form.reset();
 });
+
+// ✅ Export JSON
+exportBtn.addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(addedApps, null, 2)], {
+    type: "application/json"
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "apps.json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
