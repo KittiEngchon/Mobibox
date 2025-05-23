@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
       renderTopApps(data);
       renderBadgeSummary(data);
       renderBadgeChart(data);
+      renderSegmentRadar(data);
     });
 
   function renderTopApps(apps) {
@@ -82,5 +83,44 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  function renderSegmentRadar(apps) {
+    const topApp = apps.sort((a, b) => b.rating - a.rating)[0];
+    if (!topApp || !topApp.segmentLevels) return;
+
+    const ctx = document.createElement("canvas");
+    ctx.id = "segmentChart";
+    document.body.appendChild(ctx);
+
+    const labels = ["Security", "Team", "Reputation", "Ecosystem", "Innovation"];
+    const data = labels.map(key => topApp.segmentLevels[key.toLowerCase()] || 0);
+
+    new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: topApp.name,
+          data: data,
+          backgroundColor: "rgba(97,218,251,0.3)",
+          borderColor: "#61dafb",
+          pointBackgroundColor: "#61dafb"
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 5
+          }
+        },
+        plugins: {
+          legend: { display: true }
+        }
+      }
+    });
+  }
 });
+
 
