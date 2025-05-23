@@ -1,1 +1,30 @@
-admin.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobibox Admin Panel</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="admin.js"></script>
+</head>
+<body class="bg-gray-900 text-white">
+  <header class="p-4 bg-gray-800 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">🔧 Admin Panel</h1>
+    <a href="index.html" class="text-sm underline">← Back to Store</a>
+  </header>
+
+  <main class="p-6 max-w-3xl mx-auto">
+    <form id="addAppForm" class="space-y-4">
+      <h2 class="text-xl font-semibold">Add New App</h2>
+      <input type="text" placeholder="App Name" name="name" class="w-full p-2 bg-gray-700 rounded" required>
+      <input type="url" placeholder="App URL (iframe)" name="url" class="w-full p-2 bg-gray-700 rounded" required>
+      <input type="text" placeholder="Category (DeFi, Wallet...)" name="category" class="w-full p-2 bg-gray-700 rounded" required>
+      <input type="text" placeholder="Icon URL" name="icon" class="w-full p-2 bg-gray-700 rounded">
+      <textarea placeholder="App Description" name="description" class="w-full p-2 bg-gray-700 rounded"></textarea>
+      <button type="submit" class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">Add App</button>
+    </form>
+
+    <div id="adminMessage" class="mt-4 text-green-400 hidden">✅ App added successfully (dev mode only)</div>
+  </main>
+</body>
+</html>
