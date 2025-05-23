@@ -1,82 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-black text-white">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mobibox — Web3 Super App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobibox App Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .fade-slide {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeSlideIn 1s ease forwards;
-    }
-    .fade-slide:nth-child(1) { animation-delay: 0.2s; }
-    .fade-slide:nth-child(2) { animation-delay: 0.4s; }
-    .fade-slide:nth-child(3) { animation-delay: 0.6s; }
-    .fade-slide:nth-child(4) { animation-delay: 0.8s; }
-    .fade-slide:nth-child(5) { animation-delay: 1s; }
-    .fade-slide:nth-child(6) { animation-delay: 1.2s; }
-
-    @keyframes fadeSlideIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            fadeIn: 'fadeIn 0.5s ease-in-out',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: 0 },
+              '100%': { opacity: 1 }
+            }
+          }
+        }
       }
     }
-    .bounce-hover:hover {
-      animation: bounce 0.4s;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-  </style>
+  </script>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950 text-white min-h-screen flex flex-col items-center justify-center p-6">
+<body class="min-h-screen px-4 py-6">
+  <header class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold">🚀 Mobibox App Store</h1>
+      <p class="text-gray-400">เลือกแอปที่คุณต้องการ และเลือกวิธีเปิด</p>
+    </div>
+    <div class="space-x-2">
+      <button onclick="connectWallet()" class="bg-indigo-500 px-4 py-1 rounded">Connect Wallet</button>
+      <button onclick="switchChain()" class="bg-teal-600 px-4 py-1 rounded">Switch to Polygon</button>
+    </div>
+  </header>
 
-  <!-- Header Logo -->
-  <div class="text-center mb-10 fade-slide">
-    <img src="assets/logo.png" alt="Mobibox Logo" class="w-20 h-20 mx-auto mb-4 drop-shadow-lg">
-    <h1 class="text-4xl font-bold tracking-wide">Mobibox</h1>
-    <p class="text-sm text-gray-400 mt-2">Your All-in-One Web3 Super App</p>
+  <div class="mb-4 flex flex-wrap gap-2">
+    <label class="mr-2">Open Mode:</label>
+    <select id="openMode" class="text-black rounded px-2 py-1 mr-4">
+      <option value="full">Full Page</option>
+      <option value="iframe">iFrame</option>
+      <option value="modal">Popup Modal</option>
+    </select>
+
+    <button onclick="filterCategory('all')" class="bg-gray-700 px-3 py-1 rounded">All</button>
+    <button onclick="filterCategory('Finance')" class="bg-purple-700 px-3 py-1 rounded">Finance</button>
+    <button onclick="filterCategory('NFT')" class="bg-pink-700 px-3 py-1 rounded">NFT</button>
+    <button onclick="filterCategory('Social')" class="bg-green-700 px-3 py-1 rounded">Social</button>
+    <button onclick="filterCategory('Gaming')" class="bg-indigo-700 px-3 py-1 rounded">Gaming</button>
+    <button onclick="filterCategory('GameFi')" class="bg-blue-800 px-3 py-1 rounded">GameFi</button>
+    <button onclick="filterCategory('Tools')" class="bg-gray-800 px-3 py-1 rounded">Tools</button>
   </div>
 
-  <!-- Feature Modules -->
-  <div class="grid grid-cols-2 gap-4 w-full max-w-md text-center">
+  <main id="appList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></main>
 
-    <a href="#afrowallet" class="fade-slide bg-green-600 hover:bg-green-700 transition rounded-2xl p-5 shadow-xl bounce-hover">
-      <h2 class="text-lg font-bold">AfroWallet</h2>
-      <p class="text-xs text-gray-200">Crypto Send / Receive</p>
-    </a>
-
-    <a href="#minenow" class="fade-slide bg-yellow-500 hover:bg-yellow-600 transition rounded-2xl p-5 shadow-xl bounce-hover">
-      <h2 class="text-lg font-bold">MineNow</h2>
-      <p class="text-xs text-gray-100">Tap-to-Earn Mining</p>
-    </a>
-
-    <a href="#afrosocial" class="fade-slide bg-blue-600 hover:bg-blue-700 transition rounded-2xl p-5 shadow-xl bounce-hover">
-      <h2 class="text-lg font-bold">AfroSocial</h2>
-      <p class="text-xs text-gray-200">Decentralized Feed</p>
-    </a>
-
-    <a href="#afronft" class="fade-slide bg-purple-600 hover:bg-purple-700 transition rounded-2xl p-5 shadow-xl bounce-hover">
-      <h2 class="text-lg font-bold">AfroNFT</h2>
-      <p class="text-xs text-gray-200">Buy & Sell Art</p>
-    </a>
-
-    <a href="#afrolearn" class="fade-slide bg-orange-500 hover:bg-orange-600 transition rounded-2xl p-5 col-span-2 shadow-xl bounce-hover">
-      <h2 class="text-lg font-bold">AfroLearn</h2>
-      <p class="text-xs text-gray-100">Learn and Earn</p>
-    </a>
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+    <div class="relative w-full h-full max-w-4xl max-h-[90vh]">
+      <button onclick="closeModal()" class="absolute top-2 right-2 bg-red-600 px-2 py-1 rounded">Close</button>
+      <iframe id="modalFrame" src="" class="w-full h-full rounded-xl"></iframe>
+    </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="mt-12 text-gray-500 text-xs text-center fade-slide">
-    Built on Polygon • © 2025 Mobibox
-  </footer>
+  <script>
+    const apps = [
+      { name: 'QuickSwap', url: 'https://quickswap.exchange', desc: 'Decentralized exchange (DEX) on Polygon.', color: 'bg-purple-600', category: 'Finance' },
+      { name: 'Aavegotchi', url: 'https://aavegotchi.com', desc: 'NFT staking game and metaverse.', color: 'bg-pink-600', category: 'NFT' },
+      { name: 'Lens Protocol', url: 'https://lens.xyz', desc: 'Web3 social graph platform.', color: 'bg-green-600', category: 'Social' },
+      { name: 'Planet IX', url: 'https://planetix.com', desc: 'GameFi and land strategy on Polygon.', color: 'bg-blue-700', category: 'GameFi' },
+      { name: 'Arc8 by GAMEE', url: 'https://arc8.gamee.com', desc: 'Mobile Web3 esports arcade.', color: 'bg-indigo-600', category: 'Gaming' },
+      { name: 'Balancer', url: 'https://polygon.balancer.fi', desc: 'DeFi protocol for programmable liquidity.', color: 'bg-blue-600', category: 'Finance' },
+      { name: 'OpenSea (Polygon)', url: 'https://opensea.io', desc: 'Leading NFT marketplace, supports Polygon.', color: 'bg-yellow-500', category: 'NFT' },
+      { name: 'Zed Run', url: 'https://zed.run', desc: 'Digital horse racing platform.', color: 'bg-red-500', category: 'Gaming' },
+      { name: '1inch', url: 'https://app.1inch.io', desc: 'DEX aggregator with Polygon support.', color: 'bg-teal-600', category: 'Finance' },
+      { name: 'Polygon PoS Bridge', url: 'https://wallet.polygon.technology/bridge', desc: 'Bridge assets to/from Polygon.', color: 'bg-gray-700', category: 'Tools' }
+    ];
 
+    function renderApps(category = 'all') {
+      const appList = document.getElementById('appList');
+      appList.innerHTML = '';
+      apps.filter(app => category === 'all' || app.category === category).forEach(app => {
+        const div = document.createElement('div');
+        div.className = `${app.color} rounded-xl p-4 shadow-lg transition transform hover:scale-105 animate-fadeIn`;
+        div.innerHTML = `
+          <h2 class="text-xl font-bold mb-1">${app.name}</h2>
+          <p class="text-sm text-gray-100">${app.desc}</p>
+          <button onclick="openApp('${app.url}')" class="mt-3 bg-black px-3 py-1 rounded">Open</button>
+        `;
+        appList.appendChild(div);
+      });
+    }
+
+    function filterCategory(category) {
+      renderApps(category);
+    }
+
+    function openApp(url) {
+      const mode = document.getElementById('openMode').value;
+      if (mode === 'full') {
+        window.open(url, '_blank');
+      } else if (mode === 'iframe') {
+        const win = window.open('', '_blank');
+        win.document.write(`<iframe src='${url}' style='width:100%;height:100vh;border:none;'></iframe>`);
+      } else if (mode === 'modal') {
+        document.getElementById('modalFrame').src = url;
+        document.getElementById('modal').classList.remove('hidden');
+        document.getElementById('modal').classList.add('flex');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('modal').classList.remove('flex');
+      document.getElementById('modalFrame').src = '';
+    }
+
+    async function connectWallet() {
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+          alert('Connected: ' + accounts[0]);
+        } catch (err) {
+          alert('Connection failed');
+        }
+      } else {
+        alert('No wallet found');
+      }
+    }
+
+    async function switchChain() {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: '0x89',
+            chainName: 'Polygon Mainnet',
+            nativeCurrency: {
+              name: 'MATIC',
+              symbol: 'MATIC',
+              decimals: 18
+            },
+            rpcUrls: ['https://polygon-rpc.com/'],
+            blockExplorerUrls: ['https://polygonscan.com/']
+          }]
+        });
+      } catch (error) {
+        alert('Chain switch failed');
+      }
+    }
+
+    renderApps();
+  </script>
 </body>
 </html>
+
