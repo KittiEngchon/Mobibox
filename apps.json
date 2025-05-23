@@ -13,8 +13,8 @@
       "ecosystem": 5,
       "innovation": 4
     },
-    "badges": ["Top DeFi", "Polygon Grant"],
-    "favorited": false,
+    "badges": ["🌟 Top DeFi", "💰 Polygon Grant"],
+    "favorite": false,
     "reviews": [
       {
         "user": "0x123...abcd",
@@ -27,6 +27,31 @@
         "comment": "Reliable but needs UI updates."
       }
     ]
+  },
+  {
+    "name": "Aavegotchi",
+    "url": "https://aavegotchi.com",
+    "icon": "assets/aavegotchi.png",
+    "category": "GameFi",
+    "description": "NFT staking game.",
+    "rating": 4.3,
+    "certifications": {
+      "security": 5,
+      "team": 4,
+      "reputation": 4,
+      "ecosystem": 4,
+      "innovation": 5
+    },
+    "badges": ["🎮 GameFi Certified", "🛡️ Audit Passed"],
+    "favorite": true,
+    "reviews": [
+      {
+        "user": "0xa1...1b2",
+        "rating": 5,
+        "comment": "So cute and functional!"
+      }
+    ]
   }
 ]
+
 
