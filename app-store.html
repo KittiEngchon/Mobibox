@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mobibox App Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .glow:hover {
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-white min-h-screen p-4 font-sans">
+
+  <!-- Header -->
+  <div class="text-center mb-6">
+    <h1 class="text-3xl font-bold">Mobibox App Store</h1>
+    <p class="text-sm text-gray-400">Discover powerful Web3 apps</p>
+  </div>
+
+  <!-- Search & Filter -->
+  <div class="mb-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <input type="text" placeholder="Search apps..." class="w-full sm:w-1/2 px-4 py-2 rounded bg-gray-800 text-white placeholder-gray-400">
+    <div class="flex flex-wrap gap-2">
+      <button class="px-3 py-1 bg-green-700 rounded-full text-xs">Finance</button>
+      <button class="px-3 py-1 bg-yellow-600 rounded-full text-xs">Mining</button>
+      <button class="px-3 py-1 bg-blue-600 rounded-full text-xs">Social</button>
+      <button class="px-3 py-1 bg-purple-600 rounded-full text-xs">NFT</button>
+      <button class="px-3 py-1 bg-orange-500 rounded-full text-xs">Education</button>
+    </div>
+  </div>
+
+  <!-- App Cards Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 fade-in">
+
+    <!-- AfroWallet -->
+    <div class="bg-gray-800 rounded-2xl p-4 glow">
+      <h2 class="text-lg font-bold mb-1">AfroWallet</h2>
+      <p class="text-xs text-gray-300 mb-2">Secure crypto wallet with DeFi support</p>
+      <button class="bg-green-600 hover:bg-green-700 px-4 py-1 rounded text-sm">Open</button>
+    </div>
+
+    <!-- MineNow -->
+    <div class="bg-gray-800 rounded-2xl p-4 glow">
+      <h2 class="text-lg font-bold mb-1">MineNow</h2>
+      <p class="text-xs text-gray-300 mb-2">Tap-to-earn crypto miner</p>
+      <button class="bg-yellow-500 hover:bg-yellow-600 px-4 py-1 rounded text-sm">Open</button>
+    </div>
+
+    <!-- AfroSocial -->
+    <div class="bg-gray-800 rounded-2xl p-4 glow">
+      <h2 class="text-lg font-bold mb-1">AfroSocial</h2>
+      <p class="text-xs text-gray-300 mb-2">Web3 social media for Africa</p>
+      <button class="bg-blue-600 hover:bg-blue-700 px-4 py-1 rounded text-sm">Open</button>
+    </div>
+
+    <!-- AfroNFT -->
+    <div class="bg-gray-800 rounded-2xl p-4 glow">
+      <h2 class="text-lg font-bold mb-1">AfroNFT</h2>
+      <p class="text-xs text-gray-300 mb-2">Marketplace for African NFTs</p>
+      <button class="bg-purple-600 hover:bg-purple-700 px-4 py-1 rounded text-sm">Open</button>
+    </div>
+
+    <!-- AfroLearn -->
+    <div class="bg-gray-800 rounded-2xl p-4 glow">
+      <h2 class="text-lg font-bold mb-1">AfroLearn</h2>
+      <p class="text-xs text-gray-300 mb-2">Learn Web3 & earn tokens</p>
+      <button class="bg-orange-500 hover:bg-orange-600 px-4 py-1 rounded text-sm">Open</button>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-10 text-center text-gray-500 text-xs">
+    © 2025 Mobibox • Powered by Polygon
+  </footer>
+
+</body>
+</html>
