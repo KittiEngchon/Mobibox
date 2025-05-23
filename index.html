@@ -34,6 +34,27 @@
         <option value="trusted">Trusted</option>
         <option value="verified">Verified</option>
       </select>
+
+      <select id="filterTeam" class="border rounded p-2">
+        <option value="">👥 Team Transparency</option>
+        <option value="gold-certified">Gold Certified</option>
+        <option value="verified">Verified</option>
+        <option value="unverified">💩 Unverified</option>
+      </select>
+
+      <select id="filterUsers" class="border rounded p-2">
+        <option value="">👑 User Reputation</option>
+        <option value="gold-certified">Gold Certified</option>
+        <option value="trusted">Trusted</option>
+        <option value="verified">Verified</option>
+      </select>
+
+      <select id="filterEcosystem" class="border rounded p-2">
+        <option value="">🌐 Ecosystem Support</option>
+        <option value="registered">Registered</option>
+        <option value="verified">Verified</option>
+        <option value="unverified">💩 Unverified</option>
+      </select>
     </div>
 
     <!-- App Cards -->
@@ -41,7 +62,10 @@
       <!-- Example App Card -->
       <div class="bg-white rounded-2xl shadow p-4 app-card" 
            data-rating="4" 
-           data-security="unverified">
+           data-security="unverified"
+           data-team="verified"
+           data-users="gold-certified"
+           data-ecosystem="registered">
         <h2 class="text-lg font-semibold">Mobiswap</h2>
 
         <div class="flex justify-between items-center mt-2">
@@ -64,36 +88,46 @@
           <a href="#" class="hover:underline">🔳 QR</a>
         </div>
       </div>
-      <!-- Additional apps can be appended here with correct data-* attributes -->
     </div>
   </div>
 
   <script>
-    const ratingFilter = document.getElementById("filterRating");
-    const securityFilter = document.getElementById("filterSecurity");
+    const filters = {
+      rating: document.getElementById("filterRating"),
+      security: document.getElementById("filterSecurity"),
+      team: document.getElementById("filterTeam"),
+      users: document.getElementById("filterUsers"),
+      ecosystem: document.getElementById("filterEcosystem")
+    };
+
     const appCards = document.querySelectorAll(".app-card");
 
     function filterApps() {
-      const rating = parseInt(ratingFilter.value) || 0;
-      const security = securityFilter.value;
+      const rating = parseInt(filters.rating.value) || 0;
+      const security = filters.security.value;
+      const team = filters.team.value;
+      const users = filters.users.value;
+      const ecosystem = filters.ecosystem.value;
 
       appCards.forEach(card => {
-        const appRating = parseInt(card.dataset.rating);
-        const appSecurity = card.dataset.security;
+        const r = parseInt(card.dataset.rating);
+        const s = card.dataset.security;
+        const t = card.dataset.team;
+        const u = card.dataset.users;
+        const e = card.dataset.ecosystem;
 
-        const matchRating = !rating || appRating >= rating;
-        const matchSecurity = !security || appSecurity === security;
+        const match = (!rating || r >= rating) &&
+                      (!security || s === security) &&
+                      (!team || t === team) &&
+                      (!users || u === users) &&
+                      (!ecosystem || e === ecosystem);
 
-        if (matchRating && matchSecurity) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
+        card.style.display = match ? "block" : "none";
       });
     }
 
-    ratingFilter.addEventListener("change", filterApps);
-    securityFilter.addEventListener("change", filterApps);
+    Object.values(filters).forEach(el => el.addEventListener("change", filterApps));
   </script>
 </body>
 </html>
+
