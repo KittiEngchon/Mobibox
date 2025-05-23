@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mobibox Astro App Store</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <title>Mobibox App Store</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval';">
 </head>
 <body>
   <header>
-    <h1>🚀 Mobibox Astro App Store</h1>
-    <div class="toolbar">
-      <label>Filter by rating:
-        <select id="filterStars">
-          <option value="0">All</option>
-          <option value="3">3★+</option>
-          <option value="4">4★+</option>
-          <option value="5">5★</option>
-        </select>
-      </label>
-    </div>
+    <h1>Mobibox App Store</h1>
   </header>
 
+  <section class="controls">
+    <label for="filterStars">⭐ Filter by rating:</label>
+    <select id="filterStars">
+      <option value="0">All</option>
+      <option value="3">3+ stars</option>
+      <option value="4">4+ stars</option>
+      <option value="5">5 stars only</option>
+    </select>
+  </section>
+
   <main>
-    <!-- สำคัญ: ที่แสดงแอป -->
-    <div id="appGrid" class="grid-container">
-      <!-- แอปจะถูกแสดงที่นี่ผ่าน scripts.js -->
-    </div>
+    <div id="appGrid" class="app-grid"></div>
   </main>
 
   <footer>
-    <p>&copy; 2025 Mobibox Ecosystem. All rights reserved.</p>
+    <p>&copy; 2025 Mobibox</p>
   </footer>
 
   <script src="scripts.js"></script>
 </body>
 </html>
+
 
 
 
