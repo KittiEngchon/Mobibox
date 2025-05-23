@@ -3,46 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mobibox Admin</title>
+  <title>Mobibox Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header class="header">
-    <h1>🛠 Mobibox Admin Panel</h1>
+    <h1>📊 Mobibox Analytics Dashboard</h1>
   </header>
 
   <main class="container">
-    <form id="addAppForm">
-      <h2>เพิ่มแอปใหม่</h2>
-      <input type="text" placeholder="ชื่อแอป" name="name" required />
-      <input type="text" placeholder="คำอธิบาย" name="description" required />
-      <input type="text" placeholder="URL โลโก้ (assets/...)" name="logo" />
-      <input type="number" placeholder="คะแนน (1-5)" name="rating" min="1" max="5" required />
-      <select name="badge">
-        <option value="">-- เลือกระดับใบรับรอง --</option>
-        <option value="L0 Unverified">L0 Unverified</option>
-        <option value="L1">L1</option>
-        <option value="L2">L2</option>
-        <option value="L3 Verified">L3 Verified</option>
-        <option value="L4 Elite">L4 Elite</option>
-        <option value="L5 Certified">L5 Certified</option>
-      </select>
-      <textarea name="segmentLevels" placeholder="segmentLevels (JSON format)" rows="4">
-{
-  "security": 3,
-  "team": 3,
-  "reputation": 3,
-  "ecosystem": 3,
-  "innovation": 3
-}
-      </textarea>
-      <button type="submit">💾 เพิ่มแอป</button>
-    </form>
+    <section>
+      <h2>Top Trusted Apps</h2>
+      <div id="topApps" class="app-grid"></div>
+    </section>
 
-    <p id="adminStatus"></p>
+    <section>
+      <h2>Badge & Certification Summary</h2>
+      <div id="badgeSummary"></div>
+    </section>
+
+    <section>
+      <h2>📈 Badge Distribution Chart</h2>
+      <canvas id="badgeChart" width="600" height="300"></canvas>
+    </section>
+
+    <section>
+      <h2>📊 Segment Radar (Top App)</h2>
+      <canvas id="segmentChart" width="600" height="300"></canvas>
+    </section>
   </main>
 
-  <script src="admin.js"></script>
+  <footer class="container">
+    <p>&copy; 2025 Mobibox Ecosystem. Analytics by SegmentLevels™</p>
+  </footer>
+
+  <script src="dashboard.js"></script>
 </body>
 </html>
+
 
