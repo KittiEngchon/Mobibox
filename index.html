@@ -63,18 +63,13 @@
   </div>
 
   <script>
-    const apps = [
-      { name: 'QuickSwap', url: 'https://quickswap.exchange', desc: 'Decentralized exchange (DEX) on Polygon.', color: 'bg-purple-600', category: 'Finance' },
-      { name: 'Aavegotchi', url: 'https://aavegotchi.com', desc: 'NFT staking game and metaverse.', color: 'bg-pink-600', category: 'NFT' },
-      { name: 'Lens Protocol', url: 'https://lens.xyz', desc: 'Web3 social graph platform.', color: 'bg-green-600', category: 'Social' },
-      { name: 'Planet IX', url: 'https://planetix.com', desc: 'GameFi and land strategy on Polygon.', color: 'bg-blue-700', category: 'GameFi' },
-      { name: 'Arc8 by GAMEE', url: 'https://arc8.gamee.com', desc: 'Mobile Web3 esports arcade.', color: 'bg-indigo-600', category: 'Gaming' },
-      { name: 'Balancer', url: 'https://polygon.balancer.fi', desc: 'DeFi protocol for programmable liquidity.', color: 'bg-blue-600', category: 'Finance' },
-      { name: 'OpenSea (Polygon)', url: 'https://opensea.io', desc: 'Leading NFT marketplace, supports Polygon.', color: 'bg-yellow-500', category: 'NFT' },
-      { name: 'Zed Run', url: 'https://zed.run', desc: 'Digital horse racing platform.', color: 'bg-red-500', category: 'Gaming' },
-      { name: '1inch', url: 'https://app.1inch.io', desc: 'DEX aggregator with Polygon support.', color: 'bg-teal-600', category: 'Finance' },
-      { name: 'Polygon PoS Bridge', url: 'https://wallet.polygon.technology/bridge', desc: 'Bridge assets to/from Polygon.', color: 'bg-gray-700', category: 'Tools' }
-    ];
+    let apps = [];
+
+    async function loadApps(category = 'all') {
+      const res = await fetch('./apps.json');
+      apps = await res.json();
+      renderApps(category);
+    }
 
     function renderApps(category = 'all') {
       const appList = document.getElementById('appList');
@@ -149,7 +144,7 @@
       }
     }
 
-    renderApps();
+    window.onload = () => loadApps();
   </script>
 </body>
 </html>
