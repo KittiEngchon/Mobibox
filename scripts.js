@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!appGrid) return;
 
     appGrid.innerHTML = "";
-    appList.forEach((app) => {
+    const sortedApps = sortByRank(appList);
+
+    sortedApps.forEach((app) => {
       const appCard = document.createElement("div");
       appCard.className = "app-card";
 
@@ -66,6 +68,33 @@ document.addEventListener("DOMContentLoaded", function () {
       renderApps(filtered);
     });
   }
+
+  function sortByRank(apps) {
+    return apps.sort((a, b) => {
+      const avgSegmentA = average(Object.values(a.segmentLevels || {}));
+      const avgSegmentB = average(Object.values(b.segmentLevels || {}));
+      const badgeScore = {
+        "L0 Unverified": 0,
+        "L1": 1,
+        "L2": 2,
+        "L3 Verified": 3,
+        "L4 Elite": 4,
+        "L5 Certified": 5
+      };
+      const badgeA = badgeScore[a.badge] || 0;
+      const badgeB = badgeScore[b.badge] || 0;
+
+      const scoreA = (a.rating || 0) * 2 + avgSegmentA + badgeA;
+      const scoreB = (b.rating || 0) * 2 + avgSegmentB + badgeB;
+      return scoreB - scoreA;
+    });
+  }
+
+  function average(arr) {
+    if (!arr.length) return 0;
+    return arr.reduce((sum, val) => sum + val, 0) / arr.length;
+  }
 });
+
 
 
