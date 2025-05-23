@@ -1,72 +1,73 @@
 [
   {
     "name": "QuickSwap",
+    "desc": "DEX สำหรับ Polygon สุดเร็ว",
     "url": "https://quickswap.exchange",
-    "desc": "Decentralized exchange (DEX) on Polygon.",
-    "color": "bg-purple-600",
-    "category": "Finance"
+    "category": "Finance",
+    "color": "bg-blue-500"
   },
   {
-    "name": "Aavegotchi",
-    "url": "https://aavegotchi.com",
-    "desc": "NFT staking game and metaverse.",
-    "color": "bg-pink-600",
-    "category": "NFT"
+    "name": "OpenSea",
+    "desc": "NFT Marketplace อันดับหนึ่ง",
+    "url": "https://opensea.io",
+    "category": "NFT",
+    "color": "bg-indigo-600"
   },
   {
     "name": "Lens Protocol",
+    "desc": "โซเชียลแบบ Web3",
     "url": "https://lens.xyz",
-    "desc": "Web3 social graph platform.",
-    "color": "bg-green-600",
-    "category": "Social"
+    "category": "Social",
+    "color": "bg-green-600"
+  },
+  {
+    "name": "Aave",
+    "desc": "แพลตฟอร์มปล่อยกู้บน Polygon",
+    "url": "https://app.aave.com",
+    "category": "Finance",
+    "color": "bg-purple-600"
+  },
+  {
+    "name": "ZED RUN",
+    "desc": "เกมแข่งม้า NFT",
+    "url": "https://zed.run",
+    "category": "Gaming",
+    "color": "bg-pink-500"
+  },
+  {
+    "name": "Polymarket",
+    "desc": "ตลาดทำนายผลแบบกระจายศูนย์",
+    "url": "https://polymarket.com",
+    "category": "Finance",
+    "color": "bg-red-500"
   },
   {
     "name": "Planet IX",
+    "desc": "เกมกลยุทธ์บน Polygon",
     "url": "https://planetix.com",
-    "desc": "GameFi and land strategy on Polygon.",
-    "color": "bg-blue-700",
-    "category": "GameFi"
+    "category": "GameFi",
+    "color": "bg-yellow-600"
   },
   {
-    "name": "Arc8 by GAMEE",
-    "url": "https://arc8.gamee.com",
-    "desc": "Mobile Web3 esports arcade.",
-    "color": "bg-indigo-600",
-    "category": "Gaming"
+    "name": "Arc8",
+    "desc": "เกมมือถือ Play-to-Earn",
+    "url": "https://arc8.com",
+    "category": "Gaming",
+    "color": "bg-orange-500"
   },
   {
-    "name": "Balancer",
-    "url": "https://polygon.balancer.fi",
-    "desc": "DeFi protocol for programmable liquidity.",
-    "color": "bg-blue-600",
-    "category": "Finance"
+    "name": "Decentral Games",
+    "desc": "คาสิโน metaverse",
+    "url": "https://decentral.games",
+    "category": "Gaming",
+    "color": "bg-cyan-600"
   },
   {
-    "name": "OpenSea (Polygon)",
-    "url": "https://opensea.io",
-    "desc": "Leading NFT marketplace, supports Polygon.",
-    "color": "bg-yellow-500",
-    "category": "NFT"
-  },
-  {
-    "name": "Zed Run",
-    "url": "https://zed.run",
-    "desc": "Digital horse racing platform.",
-    "color": "bg-red-500",
-    "category": "Gaming"
-  },
-  {
-    "name": "1inch",
-    "url": "https://app.1inch.io",
-    "desc": "DEX aggregator with Polygon support.",
-    "color": "bg-teal-600",
-    "category": "Finance"
-  },
-  {
-    "name": "Polygon PoS Bridge",
-    "url": "https://wallet.polygon.technology/bridge",
-    "desc": "Bridge assets to/from Polygon.",
-    "color": "bg-gray-700",
-    "category": "Tools"
+    "name": "Superfluid",
+    "desc": "Streaming เงินแบบ Real-time",
+    "url": "https://app.superfluid.finance",
+    "category": "Tools",
+    "color": "bg-gray-700"
   }
 ]
+
