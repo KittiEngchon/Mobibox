@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mobibox — Web3 Super App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .fade-slide {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeSlideIn 1s ease forwards;
+    }
+    .fade-slide:nth-child(1) { animation-delay: 0.2s; }
+    .fade-slide:nth-child(2) { animation-delay: 0.4s; }
+    .fade-slide:nth-child(3) { animation-delay: 0.6s; }
+    .fade-slide:nth-child(4) { animation-delay: 0.8s; }
+    .fade-slide:nth-child(5) { animation-delay: 1s; }
+    .fade-slide:nth-child(6) { animation-delay: 1.2s; }
+
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .bounce-hover:hover {
+      animation: bounce 0.4s;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950 text-white min-h-screen flex flex-col items-center justify-center p-6">
+
+  <!-- Header Logo -->
+  <div class="text-center mb-10 fade-slide">
+    <img src="assets/logo.png" alt="Mobibox Logo" class="w-20 h-20 mx-auto mb-4 drop-shadow-lg">
+    <h1 class="text-4xl font-bold tracking-wide">Mobibox</h1>
+    <p class="text-sm text-gray-400 mt-2">Your All-in-One Web3 Super App</p>
+  </div>
+
+  <!-- Feature Modules -->
+  <div class="grid grid-cols-2 gap-4 w-full max-w-md text-center">
+
+    <a href="#afrowallet" class="fade-slide bg-green-600 hover:bg-green-700 transition rounded-2xl p-5 shadow-xl bounce-hover">
+      <h2 class="text-lg font-bold">AfroWallet</h2>
+      <p class="text-xs text-gray-200">Crypto Send / Receive</p>
+    </a>
+
+    <a href="#minenow" class="fade-slide bg-yellow-500 hover:bg-yellow-600 transition rounded-2xl p-5 shadow-xl bounce-hover">
+      <h2 class="text-lg font-bold">MineNow</h2>
+      <p class="text-xs text-gray-100">Tap-to-Earn Mining</p>
+    </a>
+
+    <a href="#afrosocial" class="fade-slide bg-blue-600 hover:bg-blue-700 transition rounded-2xl p-5 shadow-xl bounce-hover">
+      <h2 class="text-lg font-bold">AfroSocial</h2>
+      <p class="text-xs text-gray-200">Decentralized Feed</p>
+    </a>
+
+    <a href="#afronft" class="fade-slide bg-purple-600 hover:bg-purple-700 transition rounded-2xl p-5 shadow-xl bounce-hover">
+      <h2 class="text-lg font-bold">AfroNFT</h2>
+      <p class="text-xs text-gray-200">Buy & Sell Art</p>
+    </a>
+
+    <a href="#afrolearn" class="fade-slide bg-orange-500 hover:bg-orange-600 transition rounded-2xl p-5 col-span-2 shadow-xl bounce-hover">
+      <h2 class="text-lg font-bold">AfroLearn</h2>
+      <p class="text-xs text-gray-100">Learn and Earn</p>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-12 text-gray-500 text-xs text-center fade-slide">
+    Built on Polygon • © 2025 Mobibox
+  </footer>
+
+</body>
+</html>
