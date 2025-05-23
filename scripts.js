@@ -4,21 +4,33 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
       renderApps(data);
       setupFilters(data);
+    })
+    .catch((err) => {
+      console.error("Failed to load apps.json", err);
     });
 
   function renderApps(appList) {
     const appGrid = document.getElementById("appGrid");
-    if (!appGrid) return; // 🔐 ป้องกัน crash
+    if (!appGrid) return;
 
     appGrid.innerHTML = "";
     appList.forEach((app) => {
       const appCard = document.createElement("div");
       appCard.className = "app-card";
+
       appCard.innerHTML = `
-        <h3>${app.name}</h3>
-        <p>${app.description}</p>
-        <p>⭐ ${app.rating}</p>
+        <div class="app-logo">
+          <img src="${app.logo || 'assets/default.png'}" alt="${app.name}" onerror="this.src='assets/default.png';" />
+        </div>
+        <div class="app-info">
+          <h3>${app.name}</h3>
+          <p>${app.description}</p>
+          <div class="app-meta">
+            <span class="rating">⭐ ${app.rating}</span>
+          </div>
+        </div>
       `;
+
       appGrid.appendChild(appCard);
     });
   }
