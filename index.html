@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-black text-white">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mobibox App Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           animation: {
@@ -24,19 +24,20 @@
     }
   </script>
 </head>
-<body class="min-h-screen px-4 py-6">
-  <header class="flex justify-between items-center mb-6">
+<body class="min-h-screen px-4 py-6 bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
+  <header class="flex flex-wrap justify-between items-center gap-4 mb-6">
     <div>
       <h1 class="text-3xl font-bold">🚀 Mobibox App Store</h1>
-      <p class="text-gray-400">เลือกแอปที่คุณต้องการ และเลือกวิธีเปิด</p>
+      <p class="text-gray-600 dark:text-gray-400">เลือกแอปที่คุณต้องการ และเลือกวิธีเปิด</p>
     </div>
     <div class="space-x-2">
+      <button onclick="toggleTheme()" class="bg-yellow-400 dark:bg-gray-700 px-4 py-1 rounded">🌞/🌙</button>
       <button onclick="connectWallet()" class="bg-indigo-500 px-4 py-1 rounded">Connect Wallet</button>
       <button onclick="switchChain()" class="bg-teal-600 px-4 py-1 rounded">Switch to Polygon</button>
     </div>
   </header>
 
-  <div class="mb-4 flex flex-wrap gap-2">
+  <div class="mb-4 flex flex-wrap gap-2 items-center">
     <label class="mr-2">Open Mode:</label>
     <select id="openMode" class="text-black rounded px-2 py-1 mr-4">
       <option value="full">Full Page</option>
@@ -44,12 +45,16 @@
       <option value="modal">Popup Modal</option>
     </select>
 
-    <button onclick="filterCategory('all')" class="bg-gray-700 px-3 py-1 rounded">All</button>
-    <button onclick="filterCategory('Finance')" class="bg-purple-700 px-3 py-1 rounded">Finance</button>
-    <button onclick="filterCategory('NFT')" class="bg-pink-700 px-3 py-1 rounded">NFT</button>
-    <button onclick="filterCategory('Social')" class="bg-green-700 px-3 py-1 rounded">Social</button>
-    <button onclick="filterCategory('Gaming')" class="bg-indigo-700 px-3 py-1 rounded">Gaming</button>
-    <button onclick="filterCategory('GameFi')" class="bg-blue-800 px-3 py-1 rounded">GameFi</button>
+    <input id="searchBox" type="text" placeholder="🔍 ค้นหาแอป..." class="text-black px-3 py-1 rounded w-64" oninput="searchApps()">
+  </div>
+
+  <div class="mb-4 flex flex-wrap gap-2">
+    <button onclick="filterCategory('all')" class="bg-gray-300 dark:bg-gray-700 px-3 py-1 rounded">All</button>
+    <button onclick="filterCategory('Finance')" class="bg-purple-600 px-3 py-1 rounded">Finance</button>
+    <button onclick="filterCategory('NFT')" class="bg-pink-600 px-3 py-1 rounded">NFT</button>
+    <button onclick="filterCategory('Social')" class="bg-green-600 px-3 py-1 rounded">Social</button>
+    <button onclick="filterCategory('Gaming')" class="bg-indigo-600 px-3 py-1 rounded">Gaming</button>
+    <button onclick="filterCategory('GameFi')" class="bg-blue-700 px-3 py-1 rounded">GameFi</button>
     <button onclick="filterCategory('Tools')" class="bg-gray-800 px-3 py-1 rounded">Tools</button>
   </div>
 
@@ -64,6 +69,7 @@
 
   <script>
     let apps = [];
+    let currentCategory = 'all';
 
     async function loadApps(category = 'all') {
       const res = await fetch('./apps.json');
@@ -71,12 +77,17 @@
       renderApps(category);
     }
 
-    function renderApps(category = 'all') {
+    function renderApps(category = 'all', keyword = '') {
       const appList = document.getElementById('appList');
       appList.innerHTML = '';
-      apps.filter(app => category === 'all' || app.category === category).forEach(app => {
+      const filtered = apps.filter(app => {
+        return (category === 'all' || app.category === category) &&
+               (app.name.toLowerCase().includes(keyword.toLowerCase()) ||
+                app.desc.toLowerCase().includes(keyword.toLowerCase()));
+      });
+      filtered.forEach(app => {
         const div = document.createElement('div');
-        div.className = `${app.color} rounded-xl p-4 shadow-lg transition transform hover:scale-105 animate-fadeIn`;
+        div.className = `${app.color} rounded-xl p-4 shadow-lg transition transform hover:scale-105 animate-fadeIn text-white`;
         div.innerHTML = `
           <h2 class="text-xl font-bold mb-1">${app.name}</h2>
           <p class="text-sm text-gray-100">${app.desc}</p>
@@ -87,7 +98,14 @@
     }
 
     function filterCategory(category) {
-      renderApps(category);
+      currentCategory = category;
+      const keyword = document.getElementById('searchBox').value;
+      renderApps(category, keyword);
+    }
+
+    function searchApps() {
+      const keyword = document.getElementById('searchBox').value;
+      renderApps(currentCategory, keyword);
     }
 
     function openApp(url) {
@@ -144,7 +162,18 @@
       }
     }
 
-    window.onload = () => loadApps();
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    window.onload = () => {
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+      loadApps();
+    }
   </script>
 </body>
 </html>
