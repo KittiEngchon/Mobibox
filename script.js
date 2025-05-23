@@ -1,56 +1,85 @@
-fetch('apps.json')
-  .then(res => res.json())
-  .then(apps => {
-    const appList = document.getElementById('appList');
-    const filterRating = document.getElementById('filter-rating');
-    const filterSegment = document.getElementById('filter-segment');
+document.addEventListener("DOMContentLoaded", () => {
+  const appGrid = document.getElementById("appGrid");
+  const filterStars = document.getElementById("filterStars");
 
-    function renderApps() {
-      const ratingVal = parseInt(filterRating.value || 0);
-      const segment = filterSegment.value;
+  let apps = [];
+  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
-      appList.innerHTML = '';
-      apps.forEach(app => {
-        if (ratingVal && app.rating !== ratingVal) return;
-        if (segment && app.badges[segment] === 'unverified') return;
+  fetch("apps.json")
+    .then(res => res.json())
+    .then(data => {
+      apps = data;
+      renderApps(apps);
+    });
 
-        const card = document.createElement('div');
-        card.className = 'bg-white rounded-2xl shadow p-4 app-card';
-        card.innerHTML = `
-          <h2 class="text-lg font-semibold">${app.name}</h2>
-          <div class="text-sm text-gray-500">${app.type}</div>
-          <div class="text-yellow-500">${'⭐'.repeat(app.rating)}${'☆'.repeat(5 - app.rating)}</div>
-          <div class="mt-2 space-y-1 text-sm">
-            ${Object.entries(app.badges).map(([k,v]) => {
-              const labels = {
-                security: "🔒 Security",
-                team: "👥 Team",
-                users: "👑 Users",
-                ecosystem: "🌐 Ecosystem",
-                innovation: "⚙️ Innovation"
-              };
-              const icons = {
-                "unverified": "💩",
-                "registered": "🟠",
-                "verified": "🟡",
-                "trusted": "🔵",
-                "gold-certified": "👑"
-              };
-              return `<div class="badge">${icons[v]} ${labels[k]}</div>`;
-            }).join('')}
-          </div>
-          <div class="mt-2 text-sm text-blue-600 flex justify-between">
-            <a href="${app.url}" target="_blank">🔗 Visit</a>
-            <a href="#">❤️ Favorite</a>
-            <a href="#">📤 Share</a>
-            <a href="#">🔳 QR</a>
-          </div>
-        `;
-        appList.appendChild(card);
-      });
+  function renderApps(appList) {
+    appGrid.innerHTML = "";
+
+    appList.forEach(app => {
+      const card = document.createElement("div");
+      card.className = "app-card";
+
+      const isFavorite = favorites.includes(app.name);
+
+      card.innerHTML = `
+        <div class="card-actions">
+          <button onclick="toggleFavorite('${app.name}')">
+            ${isFavorite ? "❤️" : "🤍"}
+          </button>
+          <button onclick="shareApp('${app.name}')">🔗</button>
+        </div>
+        <img src="${app.icon}" alt="${app.name}" />
+        <h2>${app.name}</h2>
+        <div class="description">${app.description}</div>
+        <div class="rating">${"⭐".repeat(Math.round(app.rating))}</div>
+        <div class="badges">
+          ${app.badges.map(b => `<span class="badge">${b}</span>`).join("")}
+        </div>
+        <div class="certifications">
+          ${renderCertifications(app.certifications)}
+        </div>
+      `;
+
+      appGrid.appendChild(card);
+    });
+  }
+
+  function renderCertifications(cert) {
+    const levels = ["💩", "🥉", "🥈", "🥇", "🏆"];
+    const icons = {
+      security: "🛡️",
+      team: "🧑‍💼",
+      reputation: "💬",
+      ecosystem: "🌐",
+      innovation: "🚀"
+    };
+
+    return Object.keys(cert).map(type => {
+      const level = cert[type];
+      return `<span class="cert-icon" title="${type}: ${level}">${icons[type]}${levels[level]}</span>`;
+    }).join(" ");
+  }
+
+  window.toggleFavorite = function(name) {
+    const index = favorites.indexOf(name);
+    if (index > -1) {
+      favorites.splice(index, 1);
+    } else {
+      favorites.push(name);
     }
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    renderApps(apps);
+  };
 
-    filterRating.addEventListener('change', renderApps);
-    filterSegment.addEventListener('change', renderApps);
-    renderApps();
+  window.shareApp = function(name) {
+    const url = `${window.location.href.split("?")[0]}?app=${encodeURIComponent(name)}`;
+    navigator.clipboard.writeText(url);
+    alert(`📎 Copied share link for ${name}`);
+  };
+
+  filterStars?.addEventListener("change", e => {
+    const star = parseInt(e.target.value);
+    const filtered = apps.filter(a => Math.floor(a.rating) >= star);
+    renderApps(filtered);
   });
+});
