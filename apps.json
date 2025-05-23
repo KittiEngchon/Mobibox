@@ -1,73 +1,28 @@
 [
   {
-    "name": "QuickSwap",
-    "desc": "DEX สำหรับ Polygon สุดเร็ว",
-    "url": "https://quickswap.exchange",
-    "category": "Finance",
-    "color": "bg-blue-500"
+    "name": "Mobiswap",
+    "type": "DEX",
+    "url": "https://mobiswap.io",
+    "rating": 4,
+    "badges": {
+      "security": "verified",
+      "team": "trusted",
+      "users": "gold-certified",
+      "ecosystem": "registered",
+      "innovation": "verified"
+    }
   },
   {
-    "name": "OpenSea",
-    "desc": "NFT Marketplace อันดับหนึ่ง",
-    "url": "https://opensea.io",
-    "category": "NFT",
-    "color": "bg-indigo-600"
-  },
-  {
-    "name": "Lens Protocol",
-    "desc": "โซเชียลแบบ Web3",
-    "url": "https://lens.xyz",
-    "category": "Social",
-    "color": "bg-green-600"
-  },
-  {
-    "name": "Aave",
-    "desc": "แพลตฟอร์มปล่อยกู้บน Polygon",
-    "url": "https://app.aave.com",
-    "category": "Finance",
-    "color": "bg-purple-600"
-  },
-  {
-    "name": "ZED RUN",
-    "desc": "เกมแข่งม้า NFT",
-    "url": "https://zed.run",
-    "category": "Gaming",
-    "color": "bg-pink-500"
-  },
-  {
-    "name": "Polymarket",
-    "desc": "ตลาดทำนายผลแบบกระจายศูนย์",
-    "url": "https://polymarket.com",
-    "category": "Finance",
-    "color": "bg-red-500"
-  },
-  {
-    "name": "Planet IX",
-    "desc": "เกมกลยุทธ์บน Polygon",
-    "url": "https://planetix.com",
-    "category": "GameFi",
-    "color": "bg-yellow-600"
-  },
-  {
-    "name": "Arc8",
-    "desc": "เกมมือถือ Play-to-Earn",
-    "url": "https://arc8.com",
-    "category": "Gaming",
-    "color": "bg-orange-500"
-  },
-  {
-    "name": "Decentral Games",
-    "desc": "คาสิโน metaverse",
-    "url": "https://decentral.games",
-    "category": "Gaming",
-    "color": "bg-cyan-600"
-  },
-  {
-    "name": "Superfluid",
-    "desc": "Streaming เงินแบบ Real-time",
-    "url": "https://app.superfluid.finance",
-    "category": "Tools",
-    "color": "bg-gray-700"
+    "name": "Mobiminer",
+    "type": "Mining",
+    "url": "https://mobiminer.io",
+    "rating": 5,
+    "badges": {
+      "security": "trusted",
+      "team": "gold-certified",
+      "users": "trusted",
+      "ecosystem": "verified",
+      "innovation": "trusted"
+    }
   }
 ]
-
