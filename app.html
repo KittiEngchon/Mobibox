@@ -49,14 +49,9 @@
     const params = new URLSearchParams(location.search);
     const appId = params.get('id');
 
-    if (!appId) {
-      alert("กรุณาเปิดผ่านลิงก์จากหน้า index.html");
-      location.href = 'index.html';
-    }
-
     async function init() {
       try {
-        const res = await fetch('/Mobibox/data/apps.json');
+        const res = await fetch('./data/apps.json');
         const apps = await res.json();
         const app = apps.find(a => a.id === appId);
         if (!app) throw new Error("ไม่พบแอป");
@@ -68,9 +63,7 @@
         document.getElementById('appCategory').textContent = app.category;
         document.getElementById('appDev').textContent = app.developer;
         document.getElementById('appLink').href = app.website;
-        document.getElementById('badges').innerHTML = app.badges.map(b => `
-          <span class="badge"><img src="assets/badges/${b}.png" alt="${b}" /> ${b}</span>
-        `).join(' ');
+        document.getElementById('badges').innerHTML = app.badges.map(b => `<span class="badge">${b}</span>`).join(' ');
 
         const reviews = await getReviewsByApp(appId);
         const list = document.getElementById('reviewsList');
@@ -86,6 +79,11 @@
         document.getElementById('trustScore').textContent = `${insights.trustScore}/100 - ${insights.suggestion}`;
 
         const user = await getCurrentWalletAddress();
+        if (user) {
+          const addrSpan = document.getElementById("walletAddress");
+          if (addrSpan) addrSpan.textContent = user.slice(0, 6) + "..." + user.slice(-4);
+        }
+
         if (await checkReviewEligibility(user)) {
           document.getElementById('reviewForm').style.display = 'block';
           document.getElementById('submitReview').onclick = () => {
@@ -99,13 +97,14 @@
           showProfileModal(app.developer);
         };
       } catch (err) {
-        alert("เกิดข้อผิดพลาดในการโหลดแอป: " + err.message);
+        alert("เกิดข้อผิดพลาด: " + err.message);
       }
     }
 
-    document.getElementById('connectBtn').onclick = connectWallet;
-    init();
+    document.getElementById("connectBtn").onclick = connectWallet;
+    window.addEventListener("DOMContentLoaded", init);
   </script>
 </body>
 </html>
+
 
