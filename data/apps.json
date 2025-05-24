@@ -1,26 +1,26 @@
 [
   {
-    "id": "app001",
-    "name": "DeFi Tracker",
-    "description": "ติดตามพอร์ต DeFi ของคุณแบบเรียลไทม์",
-    "icon": "assets/app-defi.png",
-    "badges": ["Verified", "Secure", "KYC"],
-    "rating": 4
+    "id": "dex-tools",
+    "name": "DEX Tools",
+    "description": "เครื่องมือวิเคราะห์ DEX แบบเรียลไทม์ รองรับหลายเครือข่าย",
+    "image": "assets/dex-tools.png",
+    "badges": ["verified", "kyc-passed"],
+    "rating": 4.5,
+    "category": "DeFi",
+    "chain": "Polygon",
+    "developer": "0x1234...abcd",
+    "website": "https://dextools.mobibox.app"
   },
   {
-    "id": "app002",
-    "name": "NFT Gallery",
-    "description": "แกลเลอรีโชว์ NFT ที่คุณถืออยู่ พร้อมแบ่งปันให้โลกเห็น",
-    "icon": "assets/app-nft.png",
-    "badges": ["Verified", "Community Pick"],
-    "rating": 5
-  },
-  {
-    "id": "app003",
-    "name": "Mobishop",
-    "description": "ร้านค้า Web3 ซื้อขายด้วย crypto โดยไม่ผ่านตัวกลาง",
-    "icon": "assets/app-mobishop.png",
-    "badges": ["New", "No KYC"],
-    "rating": 3
+    "id": "vault-ai",
+    "name": "Vault AI",
+    "description": "ผู้ช่วยวิเคราะห์ Trust Score ด้วย AI และ NovaVault",
+    "image": "assets/vault-ai.png",
+    "badges": ["ai-certified", "audited"],
+    "rating": 4.8,
+    "category": "Security",
+    "chain": "Ethereum",
+    "developer": "0x5678...efgh",
+    "website": "https://vaultai.mobibox.app"
   }
 ]
