@@ -1,62 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mobibox App Store</title>
   <link rel="stylesheet" href="assets/style.css" />
   <link rel="icon" href="assets/logo.png" />
 </head>
-<body class="light-theme">
+<body>
   <header>
-    <div class="container">
-      <img src="assets/logo.png" alt="Mobibox" class="logo" />
-      <h1>Mobibox App Store</h1>
-      <div class="right">
-        <button id="connectBtn">Connect Wallet</button>
-        <button id="themeToggle">🌓</button>
-      </div>
-    </div>
+    <img src="assets/logo.png" alt="Mobibox Logo" height="40" />
+    <h1>Mobibox Web3 App Store</h1>
+    <button id="connectBtn">🔗 Connect Wallet</button>
   </header>
 
-  <main>
-    <section id="app-list" class="grid"></section>
-  </main>
+  <section id="filters">
+    <input type="text" id="search" placeholder="🔍 ค้นหาแอป..." />
+    <select id="chainFilter">
+      <option value="">🌐 ทุกเครือข่าย</option>
+    </select>
+    <button id="toggleTheme">🌓 เปลี่ยนธีม</button>
+  </section>
+
+  <main id="appGrid"></main>
 
   <footer>
-    <p>&copy; 2025 Mobibox. All rights reserved.</p>
+    <p>© 2025 Mobibox. Powered by Polygon & Ethereum.</p>
   </footer>
 
-  <!-- Load scripts -->
+  <!-- Script Zone -->
   <script src="libs/web3.min.js"></script>
   <script src="libs/wallet.js"></script>
   <script src="libs/ui.js"></script>
   <script>
-    window.addEventListener('DOMContentLoaded', async () => {
-      // Connect Wallet
-      document.getElementById('connectBtn').addEventListener('click', connectWallet);
+    async function loadChains() {
+      const res = await fetch('/data/chains.json');
+      const chains = await res.json();
+      const select = document.getElementById('chainFilter');
+      for (const c of chains) {
+        const opt = document.createElement('option');
+        opt.value = c.name;
+        opt.textContent = c.name;
+        select.appendChild(opt);
+      }
+    }
 
-      // Theme Toggle
-      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-
-      // Load app list
-      const res = await fetch('data/apps.json');
+    async function loadApps() {
+      const res = await fetch('/data/apps.json');
       const apps = await res.json();
-      const list = document.getElementById('app-list');
-      apps.forEach(app => {
-        const item = document.createElement('div');
-        item.className = 'app-card';
-        item.innerHTML = `
-          <img src="${app.icon}" alt="${app.name}" />
+      const grid = document.getElementById('appGrid');
+      grid.innerHTML = '';
+
+      for (const app of apps) {
+        const el = document.createElement('div');
+        el.className = 'app-card';
+        el.innerHTML = `
+          <img src="${app.image}" alt="${app.name}" />
           <h2>${app.name}</h2>
           <p>${app.description}</p>
-          <div class="badges">${app.badges.map(b => `<span>${b}</span>`).join('')}</div>
-          <div class="rating">${'⭐'.repeat(app.rating)}</div>
-          <a href="app.html?id=${app.id}" class="btn">View</a>
+          <div class="badges">${app.badges.map(b => `<span class="badge">${b}</span>`).join(' ')}</div>
+          <p>⭐ ${app.rating} | 🔗 ${app.chain}</p>
+          <a href="app.html?id=${app.id}" class="btn">ดูแอป</a>
         `;
-        list.appendChild(item);
-      });
-    });
+        grid.appendChild(el);
+      }
+    }
+
+    document.getElementById('connectBtn').onclick = connectWallet;
+    document.getElementById('toggleTheme').onclick = toggleTheme;
+
+    loadChains();
+    loadApps();
   </script>
 </body>
 </html>
+
