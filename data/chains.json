@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Ethereum",
+    "chainId": 1,
+    "rpc": "https://mainnet.infura.io/v3/YOUR_INFURA_KEY",
+    "explorer": "https://etherscan.io"
+  },
+  {
+    "name": "Polygon",
+    "chainId": 137,
+    "rpc": "https://polygon-rpc.com",
+    "explorer": "https://polygonscan.com"
+  }
+]
