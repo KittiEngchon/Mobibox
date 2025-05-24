@@ -25,12 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const appCard = document.createElement("div");
       appCard.className = "app-card";
 
+      // ❌ ไม่โหลดโลโก้จาก app.logo
       const logo = document.createElement("img");
-      logo.src = app.logo || "assets/default.png";
+      logo.src = "assets/default.png";
       logo.alt = app.name;
-      logo.onerror = () => {
-        logo.src = "assets/default.png";
-      };
 
       const logoContainer = document.createElement("div");
       logoContainer.className = "app-logo";
@@ -133,3 +131,4 @@ document.addEventListener("DOMContentLoaded", function () {
     return arr.reduce((sum, val) => sum + val, 0) / arr.length;
   }
 });
+
