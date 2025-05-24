@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
       setupFilters(data);
       setupSearch();
       setupThemeToggle();
+      setupWalletConnect();
+      setupChainSwitch();
+      setupCategoryFilter();
     })
     .catch((err) => {
       console.error("Failed to load apps.json", err);
@@ -25,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const appCard = document.createElement("div");
       appCard.className = "app-card";
 
-      // ❌ ไม่โหลดโลโก้จาก app.logo
+      // ❌ ไม่โหลดโลโก้จาก app.logo (ใช้ default เท่านั้น)
       const logo = document.createElement("img");
       logo.src = "assets/default.png";
       logo.alt = app.name;
@@ -50,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
       shareBtn.onclick = () => {
         const url = `${window.location.origin}?app=${encodeURIComponent(app.name)}`;
         navigator.clipboard.writeText(url);
-        alert("Copied share link!");
+        alert("🔗 Link copied!");
       };
 
       const meta = document.createElement("div");
@@ -105,6 +108,71 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function setupWalletConnect() {
+    const btn = document.getElementById("connectWalletBtn");
+    const display = document.getElementById("walletAddress");
+
+    if (!window.ethereum || !btn) {
+      btn.disabled = true;
+      btn.textContent = "No Wallet";
+      return;
+    }
+
+    btn.addEventListener("click", async () => {
+      try {
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const wallet = accounts[0];
+        display.textContent = shorten(wallet);
+        btn.textContent = "✅ Connected";
+      } catch (err) {
+        console.error("Wallet connect error:", err);
+        alert("❌ Failed to connect wallet");
+      }
+    });
+  }
+
+  function setupChainSwitch() {
+    const btn = document.getElementById("switchChainBtn");
+    if (!window.ethereum || !btn) return;
+
+    btn.addEventListener("click", async () => {
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x89" }] // Polygon Mainnet
+        });
+        alert("✅ Switched to Polygon");
+      } catch (err) {
+        alert("❌ Failed to switch chain");
+      }
+    });
+  }
+
+  function setupCategoryFilter() {
+    const menu = document.querySelector(".category-menu");
+    if (!menu) return;
+
+    menu.addEventListener("click", (e) => {
+      if (e.target.tagName !== "BUTTON") return;
+
+      document.querySelectorAll(".category-menu button").forEach(btn =>
+        btn.classList.remove("active")
+      );
+      e.target.classList.add("active");
+
+      const category = e.target.dataset.category;
+      let filtered = allApps;
+
+      if (category !== "All") {
+        filtered = allApps.filter(app =>
+          (app.category || "").toLowerCase() === category.toLowerCase()
+        );
+      }
+
+      renderApps(filtered);
+    });
+  }
+
   function sortByRank(apps) {
     return apps.sort((a, b) => {
       const avgSegmentA = average(Object.values(a.segmentLevels || {}));
@@ -129,6 +197,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function average(arr) {
     if (!arr.length) return 0;
     return arr.reduce((sum, val) => sum + val, 0) / arr.length;
+  }
+
+  function shorten(addr) {
+    return addr.slice(0, 6) + "..." + addr.slice(-4);
   }
 });
 
