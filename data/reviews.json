@@ -1,0 +1,16 @@
+[
+  {
+    "appId": "dex-tools",
+    "reviewer": "0x1234abcd...5678",
+    "rating": 5,
+    "comment": "อินเทอร์เฟซลื่นไหล ใช้งานง่ายสุด ๆ!",
+    "timestamp": "2025-05-21T09:45:00Z"
+  },
+  {
+    "appId": "vault-ai",
+    "reviewer": "0x9876efgh...4321",
+    "rating": 4,
+    "comment": "ฟีเจอร์ Trust Score แม่นดีครับ แต่ยังอยากให้รองรับ chain เพิ่ม",
+    "timestamp": "2025-05-22T12:15:00Z"
+  }
+]
