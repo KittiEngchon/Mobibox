@@ -129,3 +129,55 @@ body.dark-theme footer {
   background: #181818;
   color: #999;
 }
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: #333;
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 9999;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.modal-box {
+  background: white;
+  color: black;
+  padding: 1.5rem;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 90%;
+}
+body.dark-theme .modal-box {
+  background: #1e1e1e;
+  color: #eee;
+}
+.modal-box button {
+  margin-top: 1rem;
+  background: #0070f3;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
