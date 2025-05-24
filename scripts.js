@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   let allApps = [];
+  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
   fetch("apps.json")
     .then((res) => res.json())
@@ -14,9 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setupCategoryFilter();
       setupModalUI();
     })
-    .catch((err) => {
-      console.error("Failed to load apps.json", err);
-    });
+    .catch((err) => console.error("Failed to load apps.json", err));
 
   if (window.ethereum) {
     window.ethereum.on("chainChanged", () => window.location.reload());
@@ -31,19 +30,25 @@ document.addEventListener("DOMContentLoaded", function () {
     sortedApps.forEach((app) => {
       const appCard = document.createElement("div");
       appCard.className = "app-card";
+
       const logo = document.createElement("img");
       logo.src = "assets/default.png";
       logo.alt = app.name;
+
       const logoContainer = document.createElement("div");
       logoContainer.className = "app-logo";
       logoContainer.appendChild(logo);
+
       const title = document.createElement("h3");
       title.textContent = app.name;
+
       const desc = document.createElement("p");
       desc.textContent = app.description;
+
       const rating = document.createElement("span");
       rating.className = "rating";
       rating.textContent = `⭐ ${app.rating}`;
+
       const shareBtn = document.createElement("button");
       shareBtn.textContent = "🔗";
       shareBtn.title = "Copy Share Link";
@@ -52,15 +57,33 @@ document.addEventListener("DOMContentLoaded", function () {
         navigator.clipboard.writeText(url);
         showToast("🔗 Link copied!");
       };
+
+      const favBtn = document.createElement("button");
+      favBtn.textContent = favorites.includes(app.name) ? "❤️" : "🤍";
+      favBtn.title = "Favorite";
+      favBtn.onclick = () => {
+        if (favorites.includes(app.name)) {
+          favorites = favorites.filter(f => f !== app.name);
+        } else {
+          favorites.push(app.name);
+        }
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        renderApps(appList);
+        showToast("⭐ Favorite updated");
+      };
+
       const meta = document.createElement("div");
       meta.className = "app-meta";
       meta.appendChild(rating);
       meta.appendChild(shareBtn);
+      meta.appendChild(favBtn);
+
       const info = document.createElement("div");
       info.className = "app-info";
       info.appendChild(title);
       info.appendChild(desc);
       info.appendChild(meta);
+
       appCard.appendChild(logoContainer);
       appCard.appendChild(info);
       appGrid.appendChild(appCard);
