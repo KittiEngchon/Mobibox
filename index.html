@@ -2,79 +2,115 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mobibox App Store</title>
   <link rel="stylesheet" href="assets/style.css" />
-  <link rel="icon" href="assets/logo.png" />
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background: #4a00e0;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header img {
+      height: 40px;
+      margin-right: 1rem;
+    }
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 2rem;
+    }
+    .app-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 1rem;
+      transition: transform 0.2s;
+    }
+    .app-card:hover {
+      transform: translateY(-4px);
+    }
+    .app-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .badge {
+      display: inline-block;
+      background: #eee;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      margin-right: 4px;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <img src="assets/logo.png" alt="Mobibox Logo" height="40" />
-    <h1>Mobibox Web3 App Store</h1>
-    <button id="connectBtn">🔗 Connect Wallet</button>
-    <span id="walletAddress">ยังไม่เชื่อมต่อ</span>
+    <div>
+      <img src="assets/logo.png" alt="Mobibox Logo" />
+      <strong>Mobibox App Store</strong>
+    </div>
+    <div>
+      <button id="connectBtn">🔗 Connect Wallet</button>
+      <span id="walletAddress">ยังไม่เชื่อมต่อ</span>
+    </div>
   </header>
 
-  <section id="filters">
-    <input type="text" id="search" placeholder="🔍 ค้นหาแอป..." />
-    <select id="chainFilter">
-      <option value="">🌐 ทุกเครือข่าย</option>
-    </select>
-    <button id="toggleTheme">🌓 เปลี่ยนธีม</button>
-  </section>
-
-  <main id="appGrid"></main>
+  <main>
+    <div class="app-grid" id="appList"></div>
+  </main>
 
   <footer>
-    <p>© 2025 Mobibox. Powered by Polygon & Ethereum.</p>
+    © 2025 Mobibox • Web3 App Store on Polygon & Ethereum
   </footer>
 
-  <!-- Script Zone -->
   <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
   <script src="libs/wallet.js"></script>
-  <script>
-  document.getElementById("connectBtn").onclick = connectWallet;
-</script>
   <script src="libs/ui.js"></script>
   <script>
-    async function loadChains() {
-      const res = await fetch('/Mobibox/data/chains.json');
-      const chains = await res.json();
-      const select = document.getElementById('chainFilter');
-      for (const c of chains) {
-        const opt = document.createElement('option');
-        opt.value = c.name;
-        opt.textContent = c.name;
-        select.appendChild(opt);
-      }
-    }
-
     async function loadApps() {
-      const res = await fetch('/Mobibox/data/apps.json');
+      const res = await fetch("data/apps.json");
       const apps = await res.json();
-      const grid = document.getElementById('appGrid');
-      grid.innerHTML = '';
-
-      for (const app of apps) {
-        const el = document.createElement('div');
-        el.className = 'app-card';
-        el.innerHTML = `
+      const grid = document.getElementById("appList");
+      grid.innerHTML = apps.map(app => `
+        <a href="app.html?id=${app.id}" class="app-card">
           <img src="${app.image}" alt="${app.name}" />
-          <h2>${app.name}</h2>
+          <h3>${app.name}</h3>
           <p>${app.description}</p>
-          <div class="badges">${app.badges.map(b => `<span class="badge">${b}</span>`).join(' ')}</div>
-          <p>⭐ ${app.rating} | 🔗 ${app.chain}</p>
-          <a href="app.html?id=${app.id}" class="btn">ดูแอป</a>
-        `;
-        grid.appendChild(el);
-      }
+          <div>
+            ${app.badges.map(b => `<span class="badge">${b}</span>`).join(" ")}
+          </div>
+        </a>
+      `).join("");
     }
 
-    document.getElementById('connectBtn').onclick = connectWallet;
-    document.getElementById('toggleTheme').onclick = toggleTheme;
-
-    loadChains();
-    loadApps();
+    document.getElementById("connectBtn").onclick = connectWallet;
+    window.addEventListener("DOMContentLoaded", () => {
+      loadApps();
+      const saved = localStorage.getItem("wallet");
+      if (saved) {
+        document.getElementById("walletAddress").textContent = saved.slice(0, 6) + "..." + saved.slice(-4);
+      }
+    });
   </script>
 </body>
 </html>
