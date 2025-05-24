@@ -9,7 +9,12 @@
     "category": "DeFi",
     "chain": "Polygon",
     "developer": "0x1234...abcd",
-    "website": "https://dextools.mobibox.app"
+    "website": "https://dextools.mobibox.app",
+    "tags": ["dex", "chart", "analytics"],
+    "featured": true,
+    "createdAt": "2025-05-01T10:00:00Z",
+    "promoted": true,
+    "adSlot": "top-new"
   },
   {
     "id": "vault-ai",
@@ -21,6 +26,9 @@
     "category": "Security",
     "chain": "Ethereum",
     "developer": "0x5678...efgh",
-    "website": "https://vaultai.mobibox.app"
+    "website": "https://vaultai.mobibox.app",
+    "tags": ["ai", "trust", "security"],
+    "featured": true,
+    "createdAt": "2025-05-12T15:30:00Z"
   }
 ]
