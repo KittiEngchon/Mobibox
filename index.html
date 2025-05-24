@@ -46,7 +46,7 @@
     }
 
     async function loadApps() {
-      const res = await fetch('/data/apps.json');
+      const res = await fetch('/Mobibox/data/apps.json');
       const apps = await res.json();
       const grid = document.getElementById('appGrid');
       grid.innerHTML = '';
