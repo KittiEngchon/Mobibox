@@ -5,19 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mobibox App Store</title>
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Meta for SEO -->
-  <meta name="description" content="Mobibox Web3 App Store บน Polygon รวมแอป DeFi, Wallet, GameFi และอื่นๆ พร้อมรีวิวและอันดับความน่าเชื่อถือ">
-  <meta name="keywords" content="Mobibox, Web3, Polygon, App Store, DApp, DeFi, NFT, Wallet">
-
-  <!-- Social Sharing (Open Graph + Twitter) -->
-  <meta property="og:title" content="Mobibox Web3 App Store" />
-  <meta property="og:description" content="ศูนย์รวม Web3 Apps บน Polygon พร้อมรีวิว ความน่าเชื่อถือ และการรับรอง" />
-  <meta property="og:image" content="assets/cover.png" />
-  <meta property="og:url" content="https://kittiengchon.github.io/Mobibox/" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <!-- CSP -->
   <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
 </head>
 <body>
@@ -25,11 +12,27 @@
     <h1>🚀 Mobibox App Store</h1>
     <div class="menu">
       <button id="themeToggle">🌗 Theme</button>
+      <button id="connectWalletBtn">🔐 Connect Wallet</button>
+      <button id="switchChainBtn">🔁 Switch to Polygon</button>
+      <span id="walletAddress"></span>
     </div>
   </header>
 
   <section class="controls container">
+    <!-- 🧭 เมนูประเภทแอป -->
+    <div class="category-menu">
+      <button data-category="All" class="active">All</button>
+      <button data-category="Wallet">Wallet</button>
+      <button data-category="DeFi">DeFi</button>
+      <button data-category="GameFi">GameFi</button>
+      <button data-category="Tools">Tools</button>
+      <button data-category="NFT">NFT</button>
+    </div>
+
+    <!-- 🔍 ค้นหา -->
     <input type="text" id="searchInput" placeholder="🔍 ค้นหาแอป..." />
+    
+    <!-- ⭐ กรองคะแนน -->
     <label for="filterStars">⭐ Filter by rating:</label>
     <select id="filterStars">
       <option value="0">All</option>
@@ -40,15 +43,14 @@
   </section>
 
   <main class="container">
-    <div id="appGrid" class="app-grid">
-      <!-- รายการแอปจะโหลดตรงนี้ -->
-    </div>
+    <div id="appGrid" class="app-grid"></div>
   </main>
 
   <footer class="container">
-    <p>&copy; 2025 Mobibox Ecosystem. All rights reserved.</p>
+    <p>&copy; 2025 Mobibox</p>
   </footer>
 
   <script src="scripts.js" defer></script>
 </body>
 </html>
+
