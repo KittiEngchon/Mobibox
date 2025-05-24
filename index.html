@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobibox App Store</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="icon" href="assets/logo.png" />
+</head>
+<body class="light-theme">
+  <header>
+    <div class="container">
+      <img src="assets/logo.png" alt="Mobibox" class="logo" />
+      <h1>Mobibox App Store</h1>
+      <div class="right">
+        <button id="connectBtn">Connect Wallet</button>
+        <button id="themeToggle">🌓</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="app-list" class="grid"></section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mobibox. All rights reserved.</p>
+  </footer>
+
+  <!-- Load scripts -->
+  <script src="libs/web3.min.js"></script>
+  <script src="libs/wallet.js"></script>
+  <script src="libs/ui.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Connect Wallet
+      document.getElementById('connectBtn').addEventListener('click', connectWallet);
+
+      // Theme Toggle
+      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+      // Load app list
+      const res = await fetch('data/apps.json');
+      const apps = await res.json();
+      const list = document.getElementById('app-list');
+      apps.forEach(app => {
+        const item = document.createElement('div');
+        item.className = 'app-card';
+        item.innerHTML = `
+          <img src="${app.icon}" alt="${app.name}" />
+          <h2>${app.name}</h2>
+          <p>${app.description}</p>
+          <div class="badges">${app.badges.map(b => `<span>${b}</span>`).join('')}</div>
+          <div class="rating">${'⭐'.repeat(app.rating)}</div>
+          <a href="app.html?id=${app.id}" class="btn">View</a>
+        `;
+        list.appendChild(item);
+      });
+    });
+  </script>
+</body>
+</html>
