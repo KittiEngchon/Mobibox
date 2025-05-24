@@ -1,33 +1,27 @@
-// libs/wallet.js
-
-let currentAccount = null;
+let isConnecting = false;
 
 async function connectWallet() {
+  if (isConnecting) return; // 🛑 ป้องกันเรียกซ้ำ
+  isConnecting = true;
+
   if (window.ethereum) {
     try {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      currentAccount = accounts[0];
+      const currentAccount = accounts[0];
       window.web3 = new Web3(window.ethereum);
 
-      document.getElementById("walletAddress").textContent = shortenAddress(currentAccount);
-      showToast("✅ เชื่อมต่อสำเร็จ");
+      const walletSpan = document.getElementById("walletAddress");
+      if (walletSpan) walletSpan.textContent = shortenAddress(currentAccount);
 
-      // เก็บใน localStorage เผื่อใช้ต่อ
+      showToast("✅ เชื่อมต่อสำเร็จ", "success");
       localStorage.setItem("wallet", currentAccount);
-
     } catch (err) {
-      console.error("User rejected connection", err);
-      showToast("❌ ยกเลิกการเชื่อมต่อ");
+      console.error("⛔️ MetaMask Error:", err.message);
+      showToast("❌ เชื่อมต่อไม่สำเร็จ", "error");
     }
   } else {
     alert("⚠️ กรุณาติดตั้ง MetaMask");
   }
-}
 
-function getCurrentWalletAddress() {
-  return currentAccount || localStorage.getItem("wallet") || null;
-}
-
-function shortenAddress(addr) {
-  return addr ? addr.slice(0, 6) + "..." + addr.slice(-4) : "";
+  isConnecting = false;
 }
