@@ -34,7 +34,7 @@
   <script src="libs/ui.js"></script>
   <script>
     async function loadChains() {
-      const res = await fetch('/data/chains.json');
+      const res = await fetch('/Mobibox/data/chains.json');
       const chains = await res.json();
       const select = document.getElementById('chainFilter');
       for (const c of chains) {
