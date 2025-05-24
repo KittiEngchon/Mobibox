@@ -17,6 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Failed to load apps.json", err);
     });
 
+  if (window.ethereum) {
+    // หากเปลี่ยน Chain → reload หน้าเพื่อ sync ใหม่
+    window.ethereum.on("chainChanged", () => {
+      window.location.reload();
+    });
+  }
+
   function renderApps(appList) {
     const appGrid = document.getElementById("appGrid");
     if (!appGrid) return;
@@ -28,9 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const appCard = document.createElement("div");
       appCard.className = "app-card";
 
-      // ❌ ไม่โหลดโลโก้จาก app.logo (ใช้ default เท่านั้น)
       const logo = document.createElement("img");
-      logo.src = "assets/default.png";
+      logo.src = "assets/default.png"; // ❌ ไม่โหลดจาก app.logo
       logo.alt = app.name;
 
       const logoContainer = document.createElement("div");
@@ -122,8 +128,14 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         const wallet = accounts[0];
-        display.textContent = shorten(wallet);
+        const chainId = await window.ethereum.request({ method: "eth_chainId" });
+
+        display.textContent = `${shorten(wallet)} | Chain: ${getNetworkName(chainId)}`;
         btn.textContent = "✅ Connected";
+
+        if (chainId !== "0x89") {
+          alert("⚠️ กรุณาเปลี่ยนเป็น Polygon (137)");
+        }
       } catch (err) {
         console.error("Wallet connect error:", err);
         alert("❌ Failed to connect wallet");
@@ -202,5 +214,13 @@ document.addEventListener("DOMContentLoaded", function () {
   function shorten(addr) {
     return addr.slice(0, 6) + "..." + addr.slice(-4);
   }
-});
 
+  function getNetworkName(chainId) {
+    switch (chainId) {
+      case "0x1": return "Ethereum";
+      case "0x89": return "Polygon";
+      case "0x38": return "BSC";
+      default: return `Unknown (${parseInt(chainId, 16)})`;
+    }
+  }
+});
