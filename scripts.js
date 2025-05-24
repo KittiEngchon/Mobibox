@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let allApps = [];
   let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  let connectedAccount = null;
 
   fetch("apps.json")
     .then((res) => res.json())
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
       shareBtn.onclick = () => {
         const url = `${window.location.origin}?app=${encodeURIComponent(app.name)}`;
         navigator.clipboard.writeText(url);
-        showToast("🔗 Link copied!");
+        showToast("🔗 Link copied!", true);
       };
 
       const favBtn = document.createElement("button");
@@ -69,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         localStorage.setItem("favorites", JSON.stringify(favorites));
         renderApps(appList);
-        showToast("⭐ Favorite updated");
+        showToast("⭐ Favorite updated", true);
       };
 
       const meta = document.createElement("div");
@@ -126,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const openBtn = document.getElementById("connectWalletBtn");
     const confirmBtn = document.getElementById("modalConnect");
     const cancelBtn = document.getElementById("modalCancel");
+    const disconnectBtn = document.getElementById("disconnectWalletBtn");
     const addressDisplay = document.getElementById("walletAddress");
 
     if (!window.ethereum) {
@@ -145,24 +147,29 @@ document.addEventListener("DOMContentLoaded", function () {
     confirmBtn.addEventListener("click", async () => {
       try {
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const wallet = accounts[0];
+        connectedAccount = accounts[0];
         const chainId = await window.ethereum.request({ method: "eth_chainId" });
-        const balance = await window.ethereum.request({ method: "eth_getBalance", params: [wallet, "latest"] });
+        const balance = await window.ethereum.request({ method: "eth_getBalance", params: [connectedAccount, "latest"] });
         const eth = parseFloat(parseInt(balance, 16) / 1e18).toFixed(4);
 
-        addressDisplay.textContent = `${shorten(wallet)} (${eth} ETH) | Chain: ${getNetworkName(chainId)}`;
-        openBtn.textContent = "✅ Connected";
+        addressDisplay.textContent = `${shorten(connectedAccount)} (${eth} ETH) | Chain: ${getNetworkName(chainId)}`;
+        openBtn.classList.add("hidden");
+        disconnectBtn.classList.remove("hidden");
         modal.classList.add("hidden");
 
-        if (chainId !== "0x89") {
-          showToast("⚠️ กรุณาเปลี่ยนเป็น Polygon (137)");
-        } else {
-          showToast("✅ Wallet connected!");
-        }
+        showToast("✅ Wallet connected!", true);
       } catch (err) {
         console.error("Wallet connect error:", err);
-        showToast("❌ Failed to connect wallet");
+        showToast("❌ Failed to connect wallet", true);
       }
+    });
+
+    disconnectBtn.addEventListener("click", () => {
+      connectedAccount = null;
+      addressDisplay.textContent = "";
+      disconnectBtn.classList.add("hidden");
+      openBtn.classList.remove("hidden");
+      showToast("❌ Wallet disconnected", true);
     });
   }
 
@@ -175,9 +182,9 @@ document.addEventListener("DOMContentLoaded", function () {
           method: "wallet_switchEthereumChain",
           params: [{ chainId: "0x89" }]
         });
-        showToast("✅ Switched to Polygon");
+        showToast("✅ Switched to Polygon", true);
       } catch (err) {
-        showToast("❌ Failed to switch chain");
+        showToast("❌ Failed to switch chain", true);
       }
     });
   }
@@ -207,13 +214,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function showToast(message) {
+  function showToast(message, center = false) {
     const toast = document.createElement("div");
     toast.className = "toast";
     toast.textContent = message;
     const container = document.getElementById("toastContainer");
     container.appendChild(toast);
-    setTimeout(() => toast.remove(), 6000); // ช้าลงเล็กน้อย
+    setTimeout(() => toast.remove(), 6000);
   }
 
   function sortByRank(apps) {
