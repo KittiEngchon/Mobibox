@@ -61,12 +61,7 @@
       document.getElementById('appCategory').textContent = app.category;
       document.getElementById('appDev').textContent = app.developer;
       document.getElementById('appLink').href = app.website;
-
       document.getElementById('badges').innerHTML = app.badges.map(b => `<span class="badge">${b}</span>`).join(' ');
-
-      // โหลด Trust Score จาก AI
-      const score = await getTrustScore(appId);
-      document.getElementById('trustScore').textContent = `${score}/100`;
 
       // โหลดรีวิว
       const reviews = await getReviewsByApp(appId);
@@ -79,6 +74,10 @@
         </div>
       `).join('');
 
+      // โหลด Trust Score จาก AI
+      const insights = await getAIInsights(appId, reviews);
+      document.getElementById('trustScore').textContent = `${insights.trustScore}/100 - ${insights.suggestion}`;
+
       // เช็กสิทธิ์รีวิว
       const user = await getCurrentWalletAddress();
       if (await checkReviewEligibility(user)) {
@@ -87,7 +86,7 @@
           const comment = document.getElementById('reviewComment').value;
           const rating = parseInt(document.getElementById('reviewRating').value);
           submitReview({ appId, reviewer: user, comment, rating });
-        }
+        };
       }
 
       // NovaVault โปรไฟล์ dev
@@ -101,3 +100,4 @@
   </script>
 </body>
 </html>
+
