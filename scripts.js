@@ -147,9 +147,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         const wallet = accounts[0];
         const chainId = await window.ethereum.request({ method: "eth_chainId" });
-        addressDisplay.textContent = `${shorten(wallet)} | Chain: ${getNetworkName(chainId)}`;
+        const balance = await window.ethereum.request({ method: "eth_getBalance", params: [wallet, "latest"] });
+        const eth = parseFloat(parseInt(balance, 16) / 1e18).toFixed(4);
+
+        addressDisplay.textContent = `${shorten(wallet)} (${eth} ETH) | Chain: ${getNetworkName(chainId)}`;
         openBtn.textContent = "✅ Connected";
         modal.classList.add("hidden");
+
         if (chainId !== "0x89") {
           showToast("⚠️ กรุณาเปลี่ยนเป็น Polygon (137)");
         } else {
@@ -207,8 +211,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const toast = document.createElement("div");
     toast.className = "toast";
     toast.textContent = message;
-    document.getElementById("toastContainer").appendChild(toast);
-    setTimeout(() => toast.remove(), 4000);
+    const container = document.getElementById("toastContainer");
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 6000); // ช้าลงเล็กน้อย
   }
 
   function sortByRank(apps) {
