@@ -11,6 +11,10 @@ body.light-mode {
   color: #111;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* ===== CONTAINER ===== */
 .container {
   max-width: 1200px;
@@ -193,30 +197,31 @@ body.light-mode .controls select {
   color: #fff;
 }
 
-/* ===== TOAST ===== */
-.toast-container {
+/* ===== TOAST (กลางจอ) ===== */
+.toast-container.center {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 9999;
+  pointer-events: none;
 }
 .toast {
   background-color: #222;
   color: #fff;
-  padding: 0.8rem 1.2rem;
+  padding: 1rem 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   opacity: 0.95;
-  animation: fadeInOut 4s ease-in-out forwards;
+  animation: fadeInOut 6s ease-in-out forwards;
+  font-size: 1rem;
+  margin: 0.5rem auto;
 }
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translateY(-10px); }
-  10% { opacity: 1; transform: translateY(0); }
+  0% { opacity: 0; transform: scale(0.95); }
+  10% { opacity: 1; transform: scale(1); }
   90% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 0; transform: scale(0.95); }
 }
 
 /* ===== ANIMATIONS ===== */
@@ -236,4 +241,5 @@ body.light-mode .controls select {
     align-items: flex-start;
   }
 }
+
 
