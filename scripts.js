@@ -6,8 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("apps.json")
     .then((res) => res.json())
     .then((data) => {
-      allApps = data;
-      allApps = sortByRank(allApps); // 🟢 จัดเรียงแร้งก่อน
+      allApps = sortByRank(data);
       renderApps(allApps);
       setupFilters(allApps);
       setupSearch();
@@ -41,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
       logoContainer.appendChild(logo);
 
       const title = document.createElement("h3");
-      title.textContent = `#${index + 1} ${app.name}`; // 🟢 แสดงแร้ง
+      title.textContent = `#${index + 1} ${app.name}`;
 
       const desc = document.createElement("p");
       desc.textContent = app.description;
@@ -69,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
           favorites.push(app.name);
         }
         localStorage.setItem("favorites", JSON.stringify(favorites));
-        renderApps(appList);
+        renderApps(allApps); // ✅ ใช้ allApps ที่จัด rank แล้ว
         showToast("⭐ Favorite updated", true);
       };
 
@@ -91,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ... (ส่วนอื่นคงเดิม)
+  // ... (ฟังก์ชันอื่นเหมือนเดิม ไม่เปลี่ยนแปลง)
 
   function sortByRank(apps) {
     return apps.sort((a, b) => {
@@ -104,7 +103,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ... (ฟังก์ชันอื่นคงเดิม)
+  function average(arr) {
+    return arr.length ? arr.reduce((sum, val) => sum + val, 0) / arr.length : 0;
+  }
+
+  function shorten(addr) {
+    return addr.slice(0, 6) + "..." + addr.slice(-4);
+  }
+
+  function getNetworkName(chainId) {
+    switch (chainId) {
+      case "0x1": return "Ethereum";
+      case "0x89": return "Polygon";
+      case "0x38": return "BSC";
+      default: return `Unknown (${parseInt(chainId, 16)})`;
+    }
+  }
 });
+
 
 
