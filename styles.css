@@ -12,21 +12,9 @@ a {
   text-decoration: none;
 }
 
-/* ===== LIGHT MODE SUPPORT ===== */
 body.light-mode {
   background-color: #fefefe;
   color: #1a1a1a;
-}
-
-body.light-mode .app-card {
-  background: #fff;
-  border: 1px solid #ccc;
-}
-
-body.light-mode .badge,
-body.light-mode .card-actions button {
-  background: #eee;
-  color: #333;
 }
 
 /* ===== CONTAINER ===== */
@@ -52,6 +40,12 @@ body.light-mode .card-actions button {
   color: #61dafb;
 }
 
+.menu {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
 .menu button {
   background: transparent;
   color: #fff;
@@ -64,6 +58,46 @@ body.light-mode .card-actions button {
 
 .menu button:hover {
   background-color: #333;
+}
+
+body.light-mode .menu button {
+  background: #f0f0f0;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+/* ===== CATEGORY MENU ===== */
+.category-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.category-menu button {
+  background: #222;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.category-menu button.active {
+  background: #61dafb;
+  color: #000;
+}
+
+body.light-mode .category-menu button {
+  background: #eee;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+body.light-mode .category-menu button.active {
+  background: #61dafb;
+  color: #000;
 }
 
 /* ===== CONTROLS ===== */
@@ -121,7 +155,6 @@ body.light-mode .controls select {
   border-radius: 8px;
 }
 
-/* ===== INFO & RATING ===== */
 .app-info h3 {
   margin: 0.5rem 0 0.3rem;
   font-size: 1.2rem;
@@ -142,46 +175,6 @@ body.light-mode .controls select {
 .rating {
   color: gold;
   font-weight: bold;
-}
-
-/* ===== ACTION BUTTONS ===== */
-.card-actions {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  display: flex;
-  gap: 0.6rem;
-}
-
-.card-actions button {
-  background: none;
-  border: none;
-  color: #aaa;
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: 0.2s;
-}
-
-.card-actions button:hover {
-  color: #fff;
-}
-
-/* ===== BADGES ===== */
-.badges {
-  margin-top: 0.6rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.badge {
-  background: #444;
-  padding: 0.3rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  border: 1px solid #666;
-  display: inline-flex;
-  align-items: center;
 }
 
 /* ===== ANIMATION ===== */
@@ -216,4 +209,3 @@ footer {
     align-items: flex-end;
   }
 }
-
