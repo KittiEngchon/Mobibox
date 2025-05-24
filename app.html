@@ -32,7 +32,7 @@
        <h2>🔗 แชร์แอป</h2>
        <button id="copyLink">📋 คัดลอกลิงก์</button>
        <button id="showQR">📱 QR Code</button>
-       <div id="qrBox" style="margin-top:10px;"></div>
+       <canvas id="qrBox" style="margin-top:10px;"></canvas>
     </section>
 
     <section id="reviewSection">
@@ -47,7 +47,7 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <script src="libs/wallet.js"></script>
   <script src="libs/review.js"></script>
   <script src="libs/ai.js"></script>
@@ -59,7 +59,7 @@
 
     async function init() {
       try {
-        const res = await fetch('./Mobibox/data/apps.json');
+        const res = await fetch('./data/apps.json');
         const apps = await res.json();
         const app = apps.find(a => a.id === appId);
         if (!app) throw new Error("ไม่พบแอป");
@@ -114,11 +114,8 @@
 
         document.getElementById("showQR").onclick = () => {
           const box = document.getElementById("qrBox");
-          box.innerHTML = "";
-          new QRCode(box, {
-            text: location.href,
-            width: 160,
-            height: 160
+          QRCode.toCanvas(box, location.href, { width: 160 }, function (error) {
+            if (error) console.error(error);
           });
         };
 
@@ -132,4 +129,3 @@
   </script>
 </body>
 </html>
-
