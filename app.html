@@ -29,10 +29,10 @@
     </section>
 
     <section id="shareSection">
-       <h2>🔗 แชร์แอป</h2>
-       <button id="copyLink">📋 คัดลอกลิงก์</button>
-       <button id="showQR">📱 QR Code</button>
-       <canvas id="qrBox" style="margin-top:10px;"></canvas>
+      <h2>🔗 แชร์แอป</h2>
+      <button id="copyLink">📋 คัดลอกลิงก์</button>
+      <button id="showQR">📱 QR Code</button>
+      <canvas id="qrCanvas" style="margin-top:10px;"></canvas>
     </section>
 
     <section id="reviewSection">
@@ -53,6 +53,7 @@
   <script src="libs/ai.js"></script>
   <script src="libs/novavault.js"></script>
   <script src="libs/ui.js"></script>
+  <script src="libs/qrcode.js"></script>
   <script>
     const params = new URLSearchParams(location.search);
     const appId = params.get('id');
@@ -105,7 +106,6 @@
           showProfileModal(app.developer);
         };
 
-        // แชร์ลิงก์
         document.getElementById("copyLink").onclick = () => {
           const url = location.href;
           navigator.clipboard.writeText(url);
@@ -113,10 +113,7 @@
         };
 
         document.getElementById("showQR").onclick = () => {
-          const box = document.getElementById("qrBox");
-          QRCode.toCanvas(box, location.href, { width: 160 }, function (error) {
-            if (error) console.error(error);
-          });
+          generateQRCode("qrCanvas", location.href);
         };
 
       } catch (err) {
