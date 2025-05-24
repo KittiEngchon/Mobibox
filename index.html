@@ -8,6 +8,7 @@
   <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
 </head>
 <body>
+  <!-- HEADER -->
   <header class="header">
     <h1>🚀 Mobibox App Store</h1>
     <div class="menu">
@@ -18,8 +19,8 @@
     </div>
   </header>
 
+  <!-- CONTROL PANEL -->
   <section class="controls container">
-    <!-- 🧭 เมนูประเภทแอป -->
     <div class="category-menu">
       <button data-category="All" class="active">All</button>
       <button data-category="Wallet">Wallet</button>
@@ -29,10 +30,8 @@
       <button data-category="NFT">NFT</button>
     </div>
 
-    <!-- 🔍 ค้นหา -->
     <input type="text" id="searchInput" placeholder="🔍 ค้นหาแอป..." />
 
-    <!-- ⭐ กรองคะแนน -->
     <label for="filterStars">⭐ Filter by rating:</label>
     <select id="filterStars">
       <option value="0">All</option>
@@ -42,16 +41,30 @@
     </select>
   </section>
 
+  <!-- APP GRID -->
   <main class="container">
     <div id="appGrid" class="app-grid"></div>
   </main>
 
+  <!-- FOOTER -->
   <footer class="container">
     <p>&copy; 2025 Mobibox Ecosystem. All rights reserved.</p>
   </footer>
 
+  <!-- 🔐 CONNECT WALLET MODAL -->
+  <div id="walletModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>🔐 Connect Wallet</h2>
+      <p>Connect your wallet to continue using Mobibox App Store.</p>
+      <button id="modalConnect">🟢 Connect</button>
+      <button id="modalCancel">❌ Cancel</button>
+    </div>
+  </div>
+
+  <!-- 🔔 TOAST NOTIFICATION -->
+  <div id="toastContainer" class="toast-container"></div>
+
   <script src="scripts.js" defer></script>
 </body>
 </html>
-
 
