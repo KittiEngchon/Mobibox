@@ -48,51 +48,58 @@
     const params = new URLSearchParams(location.search);
     const appId = params.get('id');
 
+    if (!appId) {
+      alert("กรุณาเปิดผ่านลิงก์จากหน้า index.html");
+      location.href = 'index.html';
+    }
+
     async function init() {
-      const res = await fetch('/data/apps.json');
-      const apps = await res.json();
-      const app = apps.find(a => a.id === appId);
-      if (!app) return alert("ไม่พบแอป");
+      try {
+        const res = await fetch('/data/apps.json');
+        const apps = await res.json();
+        const app = apps.find(a => a.id === appId);
+        if (!app) throw new Error("ไม่พบแอป");
 
-      document.getElementById('appName').textContent = app.name;
-      document.getElementById('appImage').src = app.image;
-      document.getElementById('appDesc').textContent = app.description;
-      document.getElementById('appChain').textContent = app.chain;
-      document.getElementById('appCategory').textContent = app.category;
-      document.getElementById('appDev').textContent = app.developer;
-      document.getElementById('appLink').href = app.website;
-      document.getElementById('badges').innerHTML = app.badges.map(b => `<span class="badge">${b}</span>`).join(' ');
+        document.getElementById('appName').textContent = app.name;
+        document.getElementById('appImage').src = app.image;
+        document.getElementById('appDesc').textContent = app.description;
+        document.getElementById('appChain').textContent = app.chain;
+        document.getElementById('appCategory').textContent = app.category;
+        document.getElementById('appDev').textContent = app.developer;
+        document.getElementById('appLink').href = app.website;
+        document.getElementById('badges').innerHTML = app.badges.map(b => `
+          <span class="badge"><img src="assets/badges/${b}.png" alt="${b}" /> ${b}</span>
+        `).join(' ');
 
-      // โหลดรีวิว
-      const reviews = await getReviewsByApp(appId);
-      const list = document.getElementById('reviewsList');
-      list.innerHTML = reviews.map(r => `
-        <div class="review">
-          <p>⭐ ${r.rating}</p>
-          <p>${r.comment}</p>
-          <small>${r.reviewer}</small>
-        </div>
-      `).join('');
+        const reviews = await getReviewsByApp(appId);
+        const list = document.getElementById('reviewsList');
+        list.innerHTML = reviews.map(r => `
+          <div class="review">
+            <p>⭐ ${r.rating}</p>
+            <p>${r.comment}</p>
+            <small>${r.reviewer}</small>
+          </div>
+        `).join('');
 
-      // โหลด Trust Score จาก AI
-      const insights = await getAIInsights(appId, reviews);
-      document.getElementById('trustScore').textContent = `${insights.trustScore}/100 - ${insights.suggestion}`;
+        const insights = await getAIInsights(appId, reviews);
+        document.getElementById('trustScore').textContent = `${insights.trustScore}/100 - ${insights.suggestion}`;
 
-      // เช็กสิทธิ์รีวิว
-      const user = await getCurrentWalletAddress();
-      if (await checkReviewEligibility(user)) {
-        document.getElementById('reviewForm').style.display = 'block';
-        document.getElementById('submitReview').onclick = () => {
-          const comment = document.getElementById('reviewComment').value;
-          const rating = parseInt(document.getElementById('reviewRating').value);
-          submitReview({ appId, reviewer: user, comment, rating });
+        const user = await getCurrentWalletAddress();
+        if (await checkReviewEligibility(user)) {
+          document.getElementById('reviewForm').style.display = 'block';
+          document.getElementById('submitReview').onclick = () => {
+            const comment = document.getElementById('reviewComment').value;
+            const rating = parseInt(document.getElementById('reviewRating').value);
+            submitReview({ appId, reviewer: user, comment, rating });
+          };
+        }
+
+        document.getElementById('viewProfile').onclick = () => {
+          showProfileModal(app.developer);
         };
+      } catch (err) {
+        alert("เกิดข้อผิดพลาดในการโหลดแอป: " + err.message);
       }
-
-      // NovaVault โปรไฟล์ dev
-      document.getElementById('viewProfile').onclick = () => {
-        showProfileModal(app.developer); // ฟังก์ชันใน novavault.js
-      };
     }
 
     document.getElementById('connectBtn').onclick = connectWallet;
