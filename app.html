@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>รายละเอียดแอป | Mobibox</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header>
+    <a href="index.html">⬅ กลับ</a>
+    <h1 id="appName">...</h1>
+    <button id="connectBtn">🔗 Connect Wallet</button>
+  </header>
+
+  <main id="appDetail">
+    <img id="appImage" src="" alt="" />
+    <p id="appDesc"></p>
+    <div id="badges"></div>
+    <p>Chain: <span id="appChain"></span></p>
+    <p>Category: <span id="appCategory"></span></p>
+    <p>ผู้พัฒนา: <span id="appDev"></span> <button id="viewProfile">👁️ โปรไฟล์</button></p>
+    <a id="appLink" class="btn" target="_blank">🌐 ไปยังเว็บไซต์</a>
+
+    <section id="trustSection">
+      <h2>🧠 Trust Score (AI)</h2>
+      <p id="trustScore">กำลังโหลด...</p>
+    </section>
+
+    <section id="reviewSection">
+      <h2>⭐ รีวิวผู้ใช้</h2>
+      <div id="reviewsList"></div>
+      <div id="reviewForm" style="display:none;">
+        <textarea id="reviewComment" placeholder="พิมพ์รีวิว..."></textarea>
+        <input type="number" id="reviewRating" min="1" max="5" placeholder="เรต 1-5" />
+        <button id="submitReview">📤 ส่งรีวิว</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="libs/web3.min.js"></script>
+  <script src="libs/wallet.js"></script>
+  <script src="libs/review.js"></script>
+  <script src="libs/ai.js"></script>
+  <script src="libs/novavault.js"></script>
+  <script src="libs/ui.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const appId = params.get('id');
+
+    async function init() {
+      const res = await fetch('/data/apps.json');
+      const apps = await res.json();
+      const app = apps.find(a => a.id === appId);
+      if (!app) return alert("ไม่พบแอป");
+
+      document.getElementById('appName').textContent = app.name;
+      document.getElementById('appImage').src = app.image;
+      document.getElementById('appDesc').textContent = app.description;
+      document.getElementById('appChain').textContent = app.chain;
+      document.getElementById('appCategory').textContent = app.category;
+      document.getElementById('appDev').textContent = app.developer;
+      document.getElementById('appLink').href = app.website;
+
+      document.getElementById('badges').innerHTML = app.badges.map(b => `<span class="badge">${b}</span>`).join(' ');
+
+      // โหลด Trust Score จาก AI
+      const score = await getTrustScore(appId);
+      document.getElementById('trustScore').textContent = `${score}/100`;
+
+      // โหลดรีวิว
+      const reviews = await getReviewsByApp(appId);
+      const list = document.getElementById('reviewsList');
+      list.innerHTML = reviews.map(r => `
+        <div class="review">
+          <p>⭐ ${r.rating}</p>
+          <p>${r.comment}</p>
+          <small>${r.reviewer}</small>
+        </div>
+      `).join('');
+
+      // เช็กสิทธิ์รีวิว
+      const user = await getCurrentWalletAddress();
+      if (await checkReviewEligibility(user)) {
+        document.getElementById('reviewForm').style.display = 'block';
+        document.getElementById('submitReview').onclick = () => {
+          const comment = document.getElementById('reviewComment').value;
+          const rating = parseInt(document.getElementById('reviewRating').value);
+          submitReview({ appId, reviewer: user, comment, rating });
+        }
+      }
+
+      // NovaVault โปรไฟล์ dev
+      document.getElementById('viewProfile').onclick = () => {
+        showProfileModal(app.developer); // ฟังก์ชันใน novavault.js
+      };
+    }
+
+    document.getElementById('connectBtn').onclick = connectWallet;
+    init();
+  </script>
+</body>
+</html>
